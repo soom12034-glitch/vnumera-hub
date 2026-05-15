@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vNumera — لوحة التحكم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <h2><span class="v-letter">V</span><span class="numera-text">Numera</span></h2>
+      <p>لوحة التحكم</p>
+      <input type="password" id="loginPass" placeholder="كلمة المرور">
+      <button onclick="doLogin()">دخول</button>
+      <p class="login-error" id="loginError"></p>
+    </div>
+  </div>
+
+  <div class="admin-layout hidden" id="adminLayout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="v-letter">V</span><span class="numera-text">Numera</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showTab('settings')">⚙️ الإعدادات العامة</button>
+        <button class="nav-item" onclick="showTab('apps')">📱 البرامج</button>
+        <button class="nav-item" onclick="showTab('ads')">📢 الإعلانات</button>
+        <button class="nav-item" onclick="showTab('social')">🔗 التواصل</button>
+        <button class="nav-item" onclick="logout()">🚪 خروج</button>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <!-- Settings Tab -->
+      <div class="tab-panel active" id="tab-settings">
+        <h2>الإعدادات العامة</h2>
+        <div class="form-group">
+          <label>اسم الموقع</label>
+          <input type="text" id="cfgSiteName" placeholder="vNumera">
+        </div>
+        <div class="form-group">
+          <label>الشعار (Tagline)</label>
+          <input type="text" id="cfgTagline" placeholder="حلول محاسبية...">
+        </div>
+        <div class="form-group">
+          <label>من نحن</label>
+          <textarea id="cfgAbout" rows="4" placeholder="اكتب نبذة عن الشركة..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>نص التذييل</label>
+          <input type="text" id="cfgFooter" placeholder="جميع الحقوق محفوظة">
+        </div>
+        <hr class="section-divider">
+        <h3 class="section-heading">🔐 الأمان</h3>
+        <div class="form-group">
+          <label>كلمة المرور الحالية</label>
+          <input type="password" id="cfgCurrPass" placeholder="أدخل كلمة المرور الحالية">
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور الجديدة</label>
+          <input type="password" id="cfgNewPass" placeholder="أدخل كلمة المرور الجديدة">
+        </div>
+        <div class="form-group">
+          <label>تأكيد كلمة المرور الجديدة</label>
+          <input type="password" id="cfgConfirmPass" placeholder="أعد كتابة كلمة المرور الجديدة">
+        </div>
+        <p id="passChangeMsg" class="msg-text"></p>
+        <button class="btn-primary" onclick="changePassword()">🔐 تغيير كلمة المرور</button>
+        <hr class="section-divider">
+        <button class="btn-primary" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+      </div>
+
+      <!-- Apps Tab -->
+      <div class="tab-panel" id="tab-apps">
+        <div class="tab-header">
+          <h2>البرامج</h2>
+          <button class="btn-primary" onclick="openAppModal()">+ إضافة برنامج</button>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الأيقونة</th>
+                <th>الاسم</th>
+                <th>الوصف</th>
+                <th>الإصدار</th>
+                <th>مميز</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="appsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ads Tab -->
+      <div class="tab-panel" id="tab-ads">
+        <div class="tab-header">
+          <h2>الإعلانات</h2>
+          <button class="btn-primary" onclick="openAdModal()">+ إضافة إعلان</button>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>العنوان</th>
+                <th>الوصف</th>
+                <th>الرابط</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="adsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Social Tab -->
+      <div class="tab-panel" id="tab-social">
+        <div class="tab-header">
+          <h2>روابط التواصل</h2>
+          <button class="btn-primary" onclick="openSocialModal()">+ إضافة رابط</button>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>الرابط</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="socialTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- App Modal -->
+  <div class="modal" id="appModal">
+    <div class="modal-content">
+      <h3 id="appModalTitle">إضافة برنامج</h3>
+      <input type="hidden" id="appEditId">
+      <div class="form-group"><label>الأيقونة (emoji)</label><input type="text" id="appIcon" placeholder="🖥️"></div>
+      <div class="form-group"><label>الاسم</label><input type="text" id="appName" placeholder="CashierPro"></div>
+      <div class="form-group"><label>الوصف</label><input type="text" id="appDesc" placeholder="وصف البرنامج"></div>
+      <div class="form-group"><label>الإصدار</label><input type="text" id="appVersion" placeholder="1.0.0"></div>
+      <div class="form-group"><label>رابط التحميل</label><input type="text" id="appDownload"
+          placeholder="downloads/app.exe"></div>
+      <div class="form-group"><label><input type="checkbox" id="appFeatured"> مميز</label></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal('appModal')">إلغاء</button>
+        <button class="btn-primary" onclick="saveApp()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad Modal -->
+  <div class="modal" id="adModal">
+    <div class="modal-content">
+      <h3 id="adModalTitle">إضافة إعلان</h3>
+      <input type="hidden" id="adEditId">
+      <div class="form-group"><label>العنوان</label><input type="text" id="adTitle" placeholder="عنوان الإعلان"></div>
+      <div class="form-group"><label>الوصف</label><input type="text" id="adDesc" placeholder="وصف الإعلان"></div>
+      <div class="form-group"><label>رابط الصورة</label><input type="text" id="adImage" placeholder="(اختياري)"></div>
+      <div class="form-group"><label>الرابط</label><input type="text" id="adLink" placeholder="https://example.com">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal('adModal')">إلغاء</button>
+        <button class="btn-primary" onclick="saveAd()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Modal -->
+  <div class="modal" id="socialModal">
+    <div class="modal-content">
+      <h3 id="socialModalTitle">إضافة رابط</h3>
+      <input type="hidden" id="socialEditIdx">
+      <div class="form-group"><label>الاسم</label><input type="text" id="socialName" placeholder="اسم المنصة"></div>
+      <div class="form-group"><label>الرابط</label><input type="text" id="socialUrl" placeholder="https://..."></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal('socialModal')">إلغاء</button>
+        <button class="btn-primary" onclick="saveSocial()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>
