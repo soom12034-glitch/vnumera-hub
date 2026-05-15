@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronUp } from 'lucide-react'
 import Hero from './sections/Hero'
-import Services from './sections/Services'
-import WhyUs from './sections/WhyUs'
-import Dashboard from './sections/Dashboard'
-import Testimonials from './sections/Testimonials'
-import Pricing from './sections/Pricing'
-import CTA from './sections/CTA'
+import Apps from './sections/Apps'
+import Featured from './sections/Featured'
+import Downloads from './sections/Downloads'
+import Categories from './sections/Categories'
+import About from './sections/About'
+import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 
 function Navbar() {
@@ -21,11 +21,12 @@ function Navbar() {
   }, [])
 
   const links = [
-    { href: '#services', label: 'الخدمات' },
-    { href: '#why-us', label: 'لماذا نحن' },
-    { href: '#dashboard', label: 'النظام' },
-    { href: '#pricing', label: 'الأسعار' },
-    { href: '#contact', label: 'تواصل' },
+    { href: '#apps', label: 'البرامج' },
+    { href: '#featured', label: 'المميز' },
+    { href: '#downloads', label: 'التحميل' },
+    { href: '#categories', label: 'التصنيفات' },
+    { href: '#about', label: 'عن الشركة' },
+    { href: '#contact', label: 'الدعم' },
   ]
 
   return (
@@ -35,8 +36,8 @@ function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-            ? 'bg-navy-950/80 backdrop-blur-xl border-b border-white/5'
-            : 'bg-transparent'
+          ? 'bg-navy-950/80 backdrop-blur-xl border-b border-white/5'
+          : 'bg-transparent'
           }`}
       >
         <div className="section-padding max-w-7xl mx-auto">
@@ -64,10 +65,10 @@ function Navbar() {
 
             <div className="hidden lg:flex items-center gap-4">
               <a
-                href="#pricing"
+                href="#downloads"
                 className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-semibold rounded-xl text-sm hover:from-primary-500 hover:to-primary-400 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/25"
               >
-                ابدأ الآن
+                تحميل البرامج
               </a>
             </div>
 
@@ -115,11 +116,11 @@ function Navbar() {
                   </a>
                 ))}
                 <a
-                  href="#pricing"
+                  href="#downloads"
                   onClick={() => setMobileOpen(false)}
                   className="mt-4 btn-primary text-center"
                 >
-                  ابدأ الآن
+                  تحميل البرامج
                 </a>
               </div>
             </div>
@@ -162,12 +163,12 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Services />
-        <WhyUs />
-        <Dashboard />
-        <Testimonials />
-        <Pricing />
-        <CTA />
+        <Apps />
+        <Featured />
+        <Downloads />
+        <Categories />
+        <About />
+        <Contact />
       </main>
       <Footer />
       <ScrollToTop />
