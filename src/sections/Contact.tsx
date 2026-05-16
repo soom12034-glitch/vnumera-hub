@@ -13,10 +13,10 @@ const channels = [
   {
     icon: Mail,
     title: 'البريد الإلكتروني',
-    value: 'support@vnumera.com',
+    value: 'cashierpro-finance@cashierpro-cloud.com',
     desc: 'رد خلال ٢٤ ساعة عمل',
     action: 'إرسال بريد',
-    href: 'mailto:support@vnumera.com',
+    href: 'mailto:cashierpro-finance@cashierpro-cloud.com',
   },
   {
     icon: MessageSquare,
