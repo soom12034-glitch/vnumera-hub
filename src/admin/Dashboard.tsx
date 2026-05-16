@@ -1,15 +1,23 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Package, FileText, Image, Users } from 'lucide-react'
-import { loadConfig, loadAdmin } from '../data/siteData'
+import { loadConfig, type SiteConfig } from '../data/siteData'
 
 export default function Dashboard() {
-  const config = loadConfig()
-  const admin = loadAdmin()
+  const [config, setConfig] = useState<SiteConfig | null>(null)
+
+  useEffect(() => {
+    loadConfig().then(setConfig)
+  }, [])
+
+  if (!config) {
+    return <div className="text-slate-400 text-sm">جاري التحميل...</div>
+  }
 
   const stats = [
     { label: 'البرامج', value: config.software.length, icon: Package, color: 'from-emerald-500 to-emerald-700' },
-    { label: 'اللقطات', value: config.software.reduce((sum, s) => sum + s.screenshots.length, 0), icon: Image, color: 'from-blue-500 to-blue-700' },
-    { label: 'وسائل التواصل', value: config.contacts.filter(c => c.active).length + config.socials.filter(s => s.active).length, icon: Users, color: 'from-violet-500 to-violet-700' },
+    { label: 'اللقطات', value: config.software.reduce((sum, s: any) => sum + s.screenshots.length, 0), icon: Image, color: 'from-blue-500 to-blue-700' },
+    { label: 'وسائل التواصل', value: config.contacts.filter((c: any) => c.active).length + config.socials.filter((s: any) => s.active).length, icon: Users, color: 'from-violet-500 to-violet-700' },
   ]
 
   return (
@@ -46,28 +54,16 @@ export default function Dashboard() {
             <p className="text-white font-semibold">{config.company.name}</p>
           </div>
           <div className="bg-navy-950 rounded-xl p-4">
-            <p className="text-slate-500 mb-1">اسم المستخدم الحالي</p>
-            <p className="text-white font-semibold">{admin.username}</p>
-          </div>
-          <div className="bg-navy-950 rounded-xl p-4">
             <p className="text-slate-500 mb-1">البرامج المعلنة</p>
             <p className="text-white font-semibold">{config.software.length} برنامج</p>
           </div>
           <div className="bg-navy-950 rounded-xl p-4">
             <p className="text-slate-500 mb-1">وسائل التواصل النشطة</p>
             <p className="text-white font-semibold">
-              {config.contacts.filter(c => c.active).length} قناة اتصال + {config.socials.filter(s => s.active).length} موقع اجتماعي
+              {config.contacts.filter((c: any) => c.active).length} قناة اتصال + {config.socials.filter((s: any) => s.active).length} موقع اجتماعي
             </p>
           </div>
         </div>
-      </div>
-
-      <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-5">
-        <h3 className="text-amber-400 font-semibold mb-2">ملاحظة مهمة</h3>
-        <p className="text-amber-200/70 text-sm leading-relaxed">
-          جميع التعديلات تُحفظ في المتصفح (localStorage). لنشر التغييرات على الموقع المباشر، يجب طلب Build و Push من المساعد.
-          الصور والملفات الكبيرة لا تُرفع مباشرة — يتم تخزين روابطها فقط.
-        </p>
       </div>
     </div>
   )

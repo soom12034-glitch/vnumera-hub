@@ -167,6 +167,18 @@ export interface AdminCredentials {
   password: string
 }
 
+export function loadAdmin(): AdminCredentials {
+  try {
+    const raw = localStorage.getItem('vnumera_admin')
+    if (raw) return JSON.parse(raw)
+  } catch { /* ignore */ }
+  return { username: 'admin', password: 'admin123' }
+}
+
+export function saveAdmin(creds: AdminCredentials) {
+  localStorage.setItem('vnumera_admin', JSON.stringify(creds))
+}
+
 export function checkAuth(): boolean {
   return !!localStorage.getItem('admin_token')
 }

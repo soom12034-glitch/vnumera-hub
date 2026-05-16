@@ -9,18 +9,22 @@ export default function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
-    setTimeout(() => {
-      if (loginAdmin(username, password)) {
+    try {
+      const success = await loginAdmin(username, password)
+      if (success) {
         window.location.href = '/admin/dashboard'
       } else {
         setError('اسم المستخدم أو كلمة المرور غير صحيحة')
       }
+    } catch {
+      setError('حدث خطأ أثناء تسجيل الدخول')
+    } finally {
       setLoading(false)
-    }, 400)
+    }
   }
 
   return (
