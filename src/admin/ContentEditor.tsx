@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Save, Check, Plus, Globe, Phone, ToggleLeft, ToggleRight, Trash2 } from 'lucide-react'
-import { loadConfig, saveConfig } from '../data/siteData'
+import { loadConfig, saveConfig, type SiteConfig } from '../data/siteData'
 
 export default function ContentEditor() {
-  const [config, setConfig] = useState(loadConfig())
+  const [config, setConfig] = useState<SiteConfig | null>(null)
   const [message, setMessage] = useState('')
   const [activeTab, setActiveTab] = useState<'company' | 'hero' | 'contacts' | 'socials'>('company')
   const [newContact, setNewContact] = useState({ label: '', value: '', icon: 'Phone', href: '', active: true })
   const [newSocial, setNewSocial] = useState({ label: '', url: '', active: true })
+
+  useEffect(() => {
+    loadConfig().then(setConfig)
+  }, [])
+
+  if (!config) {
+    return <div className="text-slate-400 text-sm">جاري التحميل...</div>
+  }
 
   const showMessage = (msg: string) => {
     setMessage(msg)
