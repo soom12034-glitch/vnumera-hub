@@ -2,7 +2,7 @@ version: '3.8'
 services:
   vnumera:
     build: .
-    container_name: vnumera-hub
+    container_name: vnumera-hub-v2
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.vnumera.rule=Host(`vnumera.cashierpro-cloud.com`)"
