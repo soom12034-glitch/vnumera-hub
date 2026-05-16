@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Package, FileText, Image, Users } from 'lucide-react'
-import { loadConfig, type SiteConfig } from '../data/siteData'
+import { loadConfig, type SiteConfig, type SoftwareItem, type ContactChannel, type SocialLink } from '../data/siteData'
 
 export default function Dashboard() {
   const [config, setConfig] = useState<SiteConfig | null>(null)
@@ -16,8 +16,8 @@ export default function Dashboard() {
 
   const stats = [
     { label: 'البرامج', value: config.software.length, icon: Package, color: 'from-emerald-500 to-emerald-700' },
-    { label: 'اللقطات', value: config.software.reduce((sum, s: any) => sum + s.screenshots.length, 0), icon: Image, color: 'from-blue-500 to-blue-700' },
-    { label: 'وسائل التواصل', value: config.contacts.filter((c: any) => c.active).length + config.socials.filter((s: any) => s.active).length, icon: Users, color: 'from-violet-500 to-violet-700' },
+    { label: 'اللقطات', value: config.software.reduce((sum, s: SoftwareItem) => sum + s.screenshots.length, 0), icon: Image, color: 'from-blue-500 to-blue-700' },
+    { label: 'وسائل التواصل', value: config.contacts.filter((c: ContactChannel) => c.active).length + config.socials.filter((s: SocialLink) => s.active).length, icon: Users, color: 'from-violet-500 to-violet-700' },
   ]
 
   return (
@@ -60,7 +60,7 @@ export default function Dashboard() {
           <div className="bg-navy-950 rounded-xl p-4">
             <p className="text-slate-500 mb-1">وسائل التواصل النشطة</p>
             <p className="text-white font-semibold">
-              {config.contacts.filter((c: any) => c.active).length} قناة اتصال + {config.socials.filter((s: any) => s.active).length} موقع اجتماعي
+              {config.contacts.filter((c: ContactChannel) => c.active).length} قناة اتصال + {config.socials.filter((s: SocialLink) => s.active).length} موقع اجتماعي
             </p>
           </div>
         </div>
