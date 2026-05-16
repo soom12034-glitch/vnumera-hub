@@ -1,4 +1,4 @@
-# Build stage
+# Build stage - Force rebuild: v3
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
