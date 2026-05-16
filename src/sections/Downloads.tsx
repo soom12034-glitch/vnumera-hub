@@ -23,16 +23,6 @@ const downloadLinks = [
     cloud: null,
   },
   {
-    name: 'BlueMax Pro',
-    version: 'v4.7.0',
-    size: '~120 MB',
-    type: 'Desktop',
-    platforms: [
-      { name: 'Windows (64-bit)', url: '#download-bluemax-windows', icon: Monitor },
-    ],
-    cloud: null,
-  },
-  {
     name: 'Surveyor Pro ERP',
     version: 'v3.8.0',
     size: '~75 MB',

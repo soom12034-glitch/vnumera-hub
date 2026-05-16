@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Download, Monitor, Cloud, ArrowLeft, ShoppingCart, FileSpreadsheet, MapPin } from 'lucide-react'
+import { Download, Monitor, Cloud, ArrowLeft, ShoppingCart, MapPin, Lightbulb, Mail } from 'lucide-react'
 
 const software = [
   {
@@ -29,17 +29,27 @@ const software = [
     featured: true,
   },
   {
-    id: 'bluemax-pro',
-    name: 'BlueMax Pro',
-    icon: FileSpreadsheet,
-    category: 'شهادات المعايرة',
-    description: 'نظام إدارة شهادات معايرة أجهزة القياس والمختبرات. يدعم إدارة العملاء، الأجهزة، الصيانة، التاريخ، والملصقات.',
-    features: ['إدارة شهادات المعايرة', 'سجل العملاء والأجهزة', 'إدارة الصيانة الدورية', 'تصميم الملصقات', 'تقارير مالية متكاملة'],
-    platforms: ['Windows'],
-    type: 'Desktop',
-    size: '~120 MB',
-    version: 'v4.7.0',
+    id: 'custom-software',
+    name: 'اطرح فكرة برنامجك',
+    icon: Lightbulb,
+    category: 'حلول مخصصة',
+    description: 'هل تبحث عن نظام محاسبي أو إداري لا يوجد في السوق؟ نحن نحوّل فكرتك إلى برنامج متكامل — من تحليل الاحتياجات إلى التسليم. سواءً كنت تحتاج إدارة مخازن متخصصة، أو فواتير إلكترونية مخصصة، أو أي حل تقني آخر... فريقنا جاهز لتنفيذه بدقة واحترافية.',
+    features: [
+      'تحليل احتياجات العمل بدقة شاملة',
+      'تصميم واجهات حسب طبيعة نشاطك التجاري',
+      'بيئة عمل: سحابي أو محلي أو تطبيق موبايل',
+      'عدد أجهزة غير محدود — حسب اتفاقية العمل',
+      'استقبال بيانات شركتك وبناء النظام عليها',
+      'تصميم لوجو احترافي إذا لم يكن لديك',
+      'دعم فني مستمر بعد التسليم',
+      'تسليم سريع ومنظم مع اختبار شامل',
+    ],
+    platforms: ['Web', 'Windows', 'Mobile'],
+    type: 'Custom',
+    size: '-',
+    version: 'حسب الطلب',
     featured: false,
+    isService: true,
   },
   {
     id: 'surveyor-pro',
@@ -87,21 +97,22 @@ export default function Apps() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`group glass-card p-6 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 ${app.featured ? 'lg:col-span-1' : ''
-                }`}
+                } ${app.isService ? 'hover:border-amber-500/30' : ''}`}
             >
               <div className="flex items-start justify-between mb-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-600/10 flex items-center justify-center border border-primary-500/20 group-hover:scale-110 transition-transform duration-500">
-                  <app.icon className="w-7 h-7 text-primary-400" />
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border group-hover:scale-110 transition-transform duration-500 ${app.isService ? 'bg-gradient-to-br from-amber-500/20 to-amber-600/10 border-amber-500/20' : 'bg-gradient-to-br from-primary-500/20 to-primary-600/10 border-primary-500/20'}`}>
+                  <app.icon className={`w-7 h-7 ${app.isService ? 'text-amber-400' : 'text-primary-400'}`} />
                 </div>
                 <div className="flex items-center gap-2">
+                  {app.isService && <span className="text-[10px] text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">خدمة</span>}
                   {app.type.includes('Cloud') && <Cloud className="w-4 h-4 text-slate-400" aria-label="Cloud" />}
                   {app.type.includes('Desktop') && <Monitor className="w-4 h-4 text-slate-400" aria-label="Desktop" />}
                 </div>
               </div>
 
               <div className="mb-4">
-                <span className="text-xs text-primary-400 font-medium">{app.category}</span>
-                <h3 className="text-xl font-bold text-white mt-1 group-hover:text-primary-300 transition-colors">{app.name}</h3>
+                <span className={`text-xs font-medium ${app.isService ? 'text-amber-400' : 'text-primary-400'}`}>{app.category}</span>
+                <h3 className={`text-xl font-bold mt-1 transition-colors ${app.isService ? 'text-white group-hover:text-amber-300' : 'text-white group-hover:text-primary-300'}`}>{app.name}</h3>
                 <p className="text-sm text-slate-400 mt-2 leading-relaxed">{app.description}</p>
               </div>
 
@@ -117,11 +128,24 @@ export default function Apps() {
                 <div className="text-xs text-slate-500">
                   <span>{app.version}</span> · <span>{app.size}</span>
                 </div>
-                <button className="flex items-center gap-2 text-sm text-primary-400 hover:text-primary-300 transition-colors font-medium group/btn">
-                  <Download className="w-4 h-4" />
-                  تحميل
-                  <ArrowLeft className="w-3 h-3 group-hover/btn:-translate-x-1 transition-transform" />
-                </button>
+                {app.isService ? (
+                  <a
+                    href="mailto:cashierpro-finance@cashierpro-cloud.com?subject=استفسار%20عن%20تطوير%20برنامج%20مخصص"
+                    className="flex items-center gap-3 text-sm text-amber-400 hover:text-amber-300 transition-colors font-medium group/btn"
+                  >
+                    <span className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 shadow-lg shadow-amber-500/30 group-hover/btn:scale-110 group-hover/btn:-translate-y-0.5 transition-all duration-300">
+                      <Mail className="w-4 h-4 text-white" />
+                    </span>
+                    تواصل معنا
+                    <ArrowLeft className="w-3 h-3 group-hover/btn:-translate-x-1 transition-transform" />
+                  </a>
+                ) : (
+                  <button className="flex items-center gap-2 text-sm text-primary-400 hover:text-primary-300 transition-colors font-medium group/btn">
+                    <Download className="w-4 h-4" />
+                    تحميل
+                    <ArrowLeft className="w-3 h-3 group-hover/btn:-translate-x-1 transition-transform" />
+                  </button>
+                )}
               </div>
             </motion.div>
           ))}

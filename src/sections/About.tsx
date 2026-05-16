@@ -35,7 +35,7 @@ export default function About() {
                     V
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">vNumera</h3>
+                    <h3 className="text-xl font-bold text-white">vNumerav</h3>
                     <p className="text-sm text-slate-400">Software Solutions</p>
                   </div>
                 </div>
@@ -46,8 +46,7 @@ export default function About() {
                 </p>
                 <p className="text-slate-300 leading-relaxed">
                   محفظتنا تشمل CashierPro Cloud (منصة سحابية متكاملة)، Cashier Pro (نقاط بيع
-                  للسوبرماركت)، BlueMax Pro (شهادات معايرة المختبرات)، و Surveyor Pro ERP
-                  (إدارة أجهزة المساحة والإيجارات).
+                  للسوبرماركت)، و Surveyor Pro ERP (إدارة أجهزة المساحة والإيجارات).
                 </p>
               </div>
             </div>

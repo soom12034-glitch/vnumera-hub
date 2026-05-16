@@ -36,7 +36,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="heading-xl text-white mb-6 max-w-4xl mx-auto"
           >
-            <span className="text-gradient">vNumera</span> — حلول برمجية
+            <span className="text-gradient">vNumerav</span> — حلول برمجية
             <br />لإدارة أعمالك باحترافية
           </motion.h1>
 

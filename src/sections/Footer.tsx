@@ -38,7 +38,7 @@ export default function Footer() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-xl">
                 V
               </div>
-              <span className="text-2xl font-bold text-white">Numera</span>
+              <span className="text-2xl font-bold text-white">Numerav</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
               منصة متكاملة للمحاسبة والأعمال. حلول ذكية للشركات في المملكة العربية السعودية والعالم.
@@ -119,7 +119,7 @@ export default function Footer() {
         <div className="flex flex-wrap gap-6 mb-12 py-8 border-y border-white/5">
           <div className="flex items-center gap-2 text-slate-400 text-sm">
             <Mail className="w-4 h-4" />
-            <span>support@vnumera.com</span>
+            <span>cashierpro-finance@cashierpro-cloud.com</span>
           </div>
           <div className="flex items-center gap-2 text-slate-400 text-sm">
             <Phone className="w-4 h-4" />
@@ -134,7 +134,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-500 text-sm">
-            © 2024 vNumera. جميع الحقوق محفوظة.
+            © 2024 vNumerav. جميع الحقوق محفوظة.
           </p>
           <p className="text-slate-600 text-xs">
             صنع بإتقان في المملكة العربية السعودية
