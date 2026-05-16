@@ -125,8 +125,8 @@ export default function Featured() {
                                 <span className="text-[8px] text-emerald-400">+٢٣٪</span>
                               </div>
                               <div className="flex items-end gap-1 h-10">
-                                {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                                  <div key={i} className="flex-1 bg-gradient-to-t from-primary-500/60 to-primary-400/20 rounded-t-sm" style={{ height: `${h}%` }} />
+                                {['h-[40%]', 'h-[65%]', 'h-[45%]', 'h-[80%]', 'h-[55%]', 'h-[90%]', 'h-[70%]'].map((cls, i) => (
+                                  <div key={i} className={`flex-1 bg-gradient-to-t from-primary-500/60 to-primary-400/20 rounded-t-sm ${cls}`} />
                                 ))}
                               </div>
                               <div className="flex justify-between text-[7px] text-slate-500 mt-0.5">

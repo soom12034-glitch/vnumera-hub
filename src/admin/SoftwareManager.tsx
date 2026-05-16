@@ -164,10 +164,10 @@ export default function SoftwareManager() {
               {item.featured && (
                 <span className="text-xs bg-primary-600/20 text-primary-400 px-2 py-1 rounded-lg">مميز</span>
               )}
-              <button onClick={() => startEdit(item)} className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+              <button onClick={() => startEdit(item)} className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all" title="تعديل" aria-label="تعديل">
                 <Edit3 className="w-4 h-4" />
               </button>
-              <button onClick={() => deleteItem(item.id)} className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+              <button onClick={() => deleteItem(item.id)} className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all" title="حذف" aria-label="حذف">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
@@ -193,7 +193,7 @@ export default function SoftwareManager() {
                 <h3 className="text-lg font-bold text-white">
                   {isAdding ? 'إضافة برنامج جديد' : 'تعديل البرنامج'}
                 </h3>
-                <button onClick={() => { setEditing(null); setIsAdding(false) }} className="text-slate-400 hover:text-white">
+                <button onClick={() => { setEditing(null); setIsAdding(false) }} className="text-slate-400 hover:text-white" title="إغلاق" aria-label="إغلاق">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -206,6 +206,7 @@ export default function SoftwareManager() {
                       type="text"
                       value={editing.name}
                       onChange={(e) => updateField('name', e.target.value)}
+                      title="الاسم"
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
@@ -215,6 +216,7 @@ export default function SoftwareManager() {
                       type="text"
                       value={editing.category}
                       onChange={(e) => updateField('category', e.target.value)}
+                      title="الفئة"
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
@@ -226,6 +228,8 @@ export default function SoftwareManager() {
                     value={editing.description}
                     onChange={(e) => updateField('description', e.target.value)}
                     rows={3}
+                    title="الوصف"
+                    aria-label="الوصف"
                     className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none"
                   />
                 </div>
@@ -237,6 +241,7 @@ export default function SoftwareManager() {
                       type="text"
                       value={editing.version}
                       onChange={(e) => updateField('version', e.target.value)}
+                      title="الإصدار"
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
@@ -246,6 +251,7 @@ export default function SoftwareManager() {
                       type="text"
                       value={editing.size}
                       onChange={(e) => updateField('size', e.target.value)}
+                      title="الحجم"
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
@@ -255,6 +261,7 @@ export default function SoftwareManager() {
                       type="text"
                       value={editing.downloadUrl || ''}
                       onChange={(e) => updateField('downloadUrl', e.target.value)}
+                      title="رابط التحميل"
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
@@ -299,7 +306,7 @@ export default function SoftwareManager() {
                     {editing.features.map((f, i) => (
                       <span key={i} className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded-lg text-xs flex items-center gap-1">
                         {f}
-                        <button onClick={() => removeFeature(i)} className="hover:text-white"><X className="w-3 h-3" /></button>
+                        <button onClick={() => removeFeature(i)} className="hover:text-white" title="حذف" aria-label="حذف"><X className="w-3 h-3" /></button>
                       </span>
                     ))}
                   </div>
@@ -323,7 +330,7 @@ export default function SoftwareManager() {
                     {editing.platforms.map((p, i) => (
                       <span key={i} className="bg-navy-800 text-slate-300 px-2 py-1 rounded-lg text-xs flex items-center gap-1">
                         {p}
-                        <button onClick={() => removePlatform(i)} className="hover:text-white"><X className="w-3 h-3" /></button>
+                        <button onClick={() => removePlatform(i)} className="hover:text-white" title="حذف" aria-label="حذف"><X className="w-3 h-3" /></button>
                       </span>
                     ))}
                   </div>
@@ -356,6 +363,8 @@ export default function SoftwareManager() {
                         <button
                           onClick={() => removeScreenshot(i)}
                           className="absolute top-1 left-1 bg-red-500/80 text-white p-1 rounded-md hover:bg-red-500"
+                          title="حذف"
+                          aria-label="حذف"
                         >
                           <X className="w-3 h-3" />
                         </button>

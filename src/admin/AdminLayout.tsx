@@ -50,9 +50,8 @@ export default function AdminLayout() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-50 bg-navy-900 border-l border-white/10 transition-transform duration-300 ${
-          mobileOpen ? 'translate-x-0' : 'translate-x-full'
-        } lg:translate-x-0 ${sidebarOpen ? 'w-64' : 'w-20'} hidden lg:block`}
+        className={`fixed top-0 right-0 bottom-0 z-50 bg-navy-900 border-l border-white/10 transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : 'translate-x-full'
+          } lg:translate-x-0 ${sidebarOpen ? 'w-64' : 'w-20'} hidden lg:block`}
       >
         <div className="h-full flex flex-col">
           <div className="flex items-center justify-between p-5 border-b border-white/10">
@@ -67,6 +66,8 @@ export default function AdminLayout() {
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="text-slate-400 hover:text-white p-1"
+              title="توسيع/طي القائمة"
+              aria-label="توسيع/طي القائمة"
             >
               <ChevronLeft className={`w-5 h-5 transition-transform ${!sidebarOpen && 'rotate-180'}`} />
             </button>
@@ -80,11 +81,10 @@ export default function AdminLayout() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${
-                    isActive
+                  className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${isActive
                       ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
                       : 'text-slate-400 hover:bg-white/5 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
                   {sidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
@@ -107,9 +107,8 @@ export default function AdminLayout() {
 
       {/* Mobile sidebar */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-50 bg-navy-900 border-l border-white/10 w-64 transition-transform duration-300 ${
-          mobileOpen ? 'translate-x-0' : 'translate-x-full'
-        } lg:hidden`}
+        className={`fixed top-0 right-0 bottom-0 z-50 bg-navy-900 border-l border-white/10 w-64 transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : 'translate-x-full'
+          } lg:hidden`}
       >
         <div className="h-full flex flex-col">
           <div className="flex items-center justify-between p-5 border-b border-white/10">
@@ -119,7 +118,7 @@ export default function AdminLayout() {
               </div>
               <span className="font-bold text-lg">لوحة التحكم</span>
             </div>
-            <button onClick={() => setMobileOpen(false)} className="text-slate-400">
+            <button onClick={() => setMobileOpen(false)} className="text-slate-400" title="إغلاق القائمة" aria-label="إغلاق القائمة">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -132,11 +131,10 @@ export default function AdminLayout() {
                   key={item.path}
                   to={item.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${
-                    isActive
+                  className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${isActive
                       ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
                       : 'text-slate-400 hover:bg-white/5 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
                   <span className="text-sm font-medium">{item.label}</span>
@@ -163,6 +161,8 @@ export default function AdminLayout() {
             <button
               onClick={() => setMobileOpen(true)}
               className="lg:hidden text-white p-2"
+              title="فتح القائمة"
+              aria-label="فتح القائمة"
             >
               <Menu className="w-5 h-5" />
             </button>

@@ -97,8 +97,8 @@ export default function ContentEditor() {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === tab
-                ? 'bg-primary-600/20 text-primary-400'
-                : 'text-slate-400 hover:text-white'
+              ? 'bg-primary-600/20 text-primary-400'
+              : 'text-slate-400 hover:text-white'
               }`}
           >
             {tab === 'company' && 'الشركة'}
@@ -118,24 +118,24 @@ export default function ContentEditor() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs text-slate-400 mb-1">اسم الشركة</label>
-              <input value={config.company.name} onChange={(e) => updateCompany('name', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+              <input value={config.company.name} onChange={(e) => updateCompany('name', e.target.value)} title="اسم الشركة" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
             </div>
             <div>
               <label className="block text-xs text-slate-400 mb-1">الموقع</label>
-              <input value={config.company.location} onChange={(e) => updateCompany('location', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+              <input value={config.company.location} onChange={(e) => updateCompany('location', e.target.value)} title="الموقع" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
             </div>
           </div>
           <div>
             <label className="block text-xs text-slate-400 mb-1">الشعار</label>
-            <input value={config.company.tagline} onChange={(e) => updateCompany('tagline', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+            <input value={config.company.tagline} onChange={(e) => updateCompany('tagline', e.target.value)} title="الشعار" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs text-slate-400 mb-1">الوصف</label>
-            <textarea value={config.company.description} onChange={(e) => updateCompany('description', e.target.value)} rows={3} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
+            <textarea value={config.company.description} onChange={(e) => updateCompany('description', e.target.value)} rows={3} title="الوصف" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
           </div>
           <div>
             <label className="block text-xs text-slate-400 mb-1">نص المحفظة</label>
-            <textarea value={config.company.portfolioText} onChange={(e) => updateCompany('portfolioText', e.target.value)} rows={2} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
+            <textarea value={config.company.portfolioText} onChange={(e) => updateCompany('portfolioText', e.target.value)} rows={2} title="نص المحفظة" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
           </div>
         </div>
       )}
@@ -145,21 +145,21 @@ export default function ContentEditor() {
           <div className="text-white font-bold mb-2">الصفحة الرئيسية</div>
           <div>
             <label className="block text-xs text-slate-400 mb-1">الوسم</label>
-            <input value={config.hero.badge} onChange={(e) => updateHero('badge', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+            <input value={config.hero.badge} onChange={(e) => updateHero('badge', e.target.value)} title="الوسم" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs text-slate-400 mb-1">العنوان 1</label>
-              <input value={config.hero.titleLine1} onChange={(e) => updateHero('titleLine1', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+              <input value={config.hero.titleLine1} onChange={(e) => updateHero('titleLine1', e.target.value)} title="العنوان 1" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
             </div>
             <div>
               <label className="block text-xs text-slate-400 mb-1">العنوان 2</label>
-              <input value={config.hero.titleLine2} onChange={(e) => updateHero('titleLine2', e.target.value)} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+              <input value={config.hero.titleLine2} onChange={(e) => updateHero('titleLine2', e.target.value)} title="العنوان 2" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
             </div>
           </div>
           <div>
             <label className="block text-xs text-slate-400 mb-1">الوصف الفرعي</label>
-            <textarea value={config.hero.subtitle} onChange={(e) => updateHero('subtitle', e.target.value)} rows={2} className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
+            <textarea value={config.hero.subtitle} onChange={(e) => updateHero('subtitle', e.target.value)} rows={2} title="الوصف الفرعي" className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none resize-none" />
           </div>
           <div className="space-y-3">
             <label className="block text-xs text-slate-400">الإحصائيات</label>
@@ -183,16 +183,16 @@ export default function ContentEditor() {
           {config.contacts.map((c) => (
             <div key={c.id} className="bg-navy-950 rounded-xl p-3 flex items-center justify-between gap-3">
               <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-2">
-                <input value={c.label} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, label: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
-                <input value={c.value} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, value: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
-                <input value={c.href} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, href: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                <input value={c.label} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, label: e.target.value } : x) })} title="التسمية" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                <input value={c.value} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, value: e.target.value } : x) })} title="القيمة" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                <input value={c.href} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, href: e.target.value } : x) })} title="الرابط" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
                 <input value={c.icon} onChange={(e) => setConfig({ ...config, contacts: config.contacts.map((x) => x.id === c.id ? { ...x, icon: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" placeholder="Icon name" />
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => toggleContact(c.id)} className="p-1.5 text-slate-400 hover:text-white">
+                <button onClick={() => toggleContact(c.id)} className="p-1.5 text-slate-400 hover:text-white" title="تفعيل/إلغاء" aria-label="تفعيل/إلغاء">
                   {c.active ? <ToggleRight className="w-5 h-5 text-emerald-400" /> : <ToggleLeft className="w-5 h-5" />}
                 </button>
-                <button onClick={() => deleteContact(c.id)} className="p-1.5 text-slate-400 hover:text-red-400">
+                <button onClick={() => deleteContact(c.id)} className="p-1.5 text-slate-400 hover:text-red-400" title="حذف" aria-label="حذف">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -205,12 +205,12 @@ export default function ContentEditor() {
               <input value={newContact.value} onChange={(e) => setNewContact({ ...newContact, value: e.target.value })} placeholder="القيمة" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
               <input value={newContact.href} onChange={(e) => setNewContact({ ...newContact, href: e.target.value })} placeholder="الرابط" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
               <div className="flex gap-2">
-                <select value={newContact.icon} onChange={(e) => setNewContact({ ...newContact, icon: e.target.value })} className="flex-1 bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none">
+                <select value={newContact.icon} onChange={(e) => setNewContact({ ...newContact, icon: e.target.value })} title="الأيقونة" className="flex-1 bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none">
                   <option value="Mail">Mail</option>
                   <option value="Phone">Phone</option>
                   <option value="MessageCircle">MessageCircle</option>
                 </select>
-                <button onClick={addContact} className="bg-primary-600 hover:bg-primary-500 text-white px-3 rounded-lg text-sm"><Plus className="w-4 h-4" /></button>
+                <button onClick={addContact} className="bg-primary-600 hover:bg-primary-500 text-white px-3 rounded-lg text-sm" title="إضافة" aria-label="إضافة"><Plus className="w-4 h-4" /></button>
               </div>
             </div>
           </div>
@@ -226,14 +226,14 @@ export default function ContentEditor() {
           {config.socials.map((s) => (
             <div key={s.id} className="bg-navy-950 rounded-xl p-3 flex items-center justify-between gap-3">
               <div className="flex-1 grid grid-cols-2 gap-2">
-                <input value={s.label} onChange={(e) => setConfig({ ...config, socials: config.socials.map((x) => x.id === s.id ? { ...x, label: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
-                <input value={s.url} onChange={(e) => setConfig({ ...config, socials: config.socials.map((x) => x.id === s.id ? { ...x, url: e.target.value } : x) })} className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                <input value={s.label} onChange={(e) => setConfig({ ...config, socials: config.socials.map((x) => x.id === s.id ? { ...x, label: e.target.value } : x) })} title="الاسم" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                <input value={s.url} onChange={(e) => setConfig({ ...config, socials: config.socials.map((x) => x.id === s.id ? { ...x, url: e.target.value } : x) })} title="الرابط" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => toggleSocial(s.id)} className="p-1.5 text-slate-400 hover:text-white">
+                <button onClick={() => toggleSocial(s.id)} className="p-1.5 text-slate-400 hover:text-white" title="تفعيل/إلغاء" aria-label="تفعيل/إلغاء">
                   {s.active ? <ToggleRight className="w-5 h-5 text-emerald-400" /> : <ToggleLeft className="w-5 h-5" />}
                 </button>
-                <button onClick={() => deleteSocial(s.id)} className="p-1.5 text-slate-400 hover:text-red-400">
+                <button onClick={() => deleteSocial(s.id)} className="p-1.5 text-slate-400 hover:text-red-400" title="حذف" aria-label="حذف">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -245,7 +245,7 @@ export default function ContentEditor() {
               <input value={newSocial.label} onChange={(e) => setNewSocial({ ...newSocial, label: e.target.value })} placeholder="الاسم" className="bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
               <div className="flex gap-2">
                 <input value={newSocial.url} onChange={(e) => setNewSocial({ ...newSocial, url: e.target.value })} placeholder="الرابط" className="flex-1 bg-navy-900 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:border-primary-500 focus:outline-none" />
-                <button onClick={addSocial} className="bg-primary-600 hover:bg-primary-500 text-white px-3 rounded-lg text-sm"><Plus className="w-4 h-4" /></button>
+                <button onClick={addSocial} className="bg-primary-600 hover:bg-primary-500 text-white px-3 rounded-lg text-sm" title="إضافة" aria-label="إضافة"><Plus className="w-4 h-4" /></button>
               </div>
             </div>
           </div>

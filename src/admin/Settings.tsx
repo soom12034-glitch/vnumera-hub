@@ -99,6 +99,7 @@ export default function Settings() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
+              title="كلمة المرور الحالية"
               className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
             />
           </div>
@@ -110,6 +111,7 @@ export default function Settings() {
                 type="text"
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
+                title="اسم المستخدم الجديد"
                 className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
               />
             </div>
@@ -119,6 +121,7 @@ export default function Settings() {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                title="كلمة المرور الجديدة"
                 className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
               />
             </div>
@@ -131,6 +134,7 @@ export default function Settings() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                title="تأكيد كلمة المرور الجديدة"
                 className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
               />
             </div>
