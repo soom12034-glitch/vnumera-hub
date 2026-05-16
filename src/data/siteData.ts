@@ -1,3 +1,5 @@
+import { api } from '../lib/api'
+
 export interface SoftwareItem {
   id: string
   name: string
@@ -143,26 +145,21 @@ export const defaultConfig: SiteConfig = {
   ],
 }
 
-const STORAGE_KEY = 'vnumera_site_config'
-const ADMIN_KEY = 'vnumera_admin'
-
-export function loadConfig(): SiteConfig {
+export async function loadConfig(): Promise<SiteConfig> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw)
-      return { ...defaultConfig, ...parsed }
-    }
-  } catch { /* ignore */ }
-  return { ...defaultConfig }
+    const data = await api.getConfig()
+    return { ...defaultConfig, ...data }
+  } catch {
+    return { ...defaultConfig }
+  }
 }
 
-export function saveConfig(config: SiteConfig) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(config))
+export async function saveConfig(config: SiteConfig) {
+  await api.updateConfig(config)
 }
 
 export function resetConfig() {
-  localStorage.removeItem(STORAGE_KEY)
+  // Clears local fallback if any
 }
 
 export interface AdminCredentials {
@@ -170,31 +167,25 @@ export interface AdminCredentials {
   password: string
 }
 
-export function loadAdmin(): AdminCredentials {
-  try {
-    const raw = localStorage.getItem(ADMIN_KEY)
-    if (raw) return JSON.parse(raw)
-  } catch { /* ignore */ }
-  return { username: 'admin', password: 'admin123' }
-}
-
-export function saveAdmin(creds: AdminCredentials) {
-  localStorage.setItem(ADMIN_KEY, JSON.stringify(creds))
-}
-
 export function checkAuth(): boolean {
-  return sessionStorage.getItem('vnumera_auth') === 'true'
+  return !!localStorage.getItem('admin_token')
 }
 
-export function loginAdmin(username: string, password: string): boolean {
-  const creds = loadAdmin()
-  if (creds.username === username && creds.password === password) {
-    sessionStorage.setItem('vnumera_auth', 'true')
+export async function loginAdmin(username: string, password: string): Promise<boolean> {
+  try {
+    const res = await api.login(username, password)
+    localStorage.setItem('admin_token', res.token)
     return true
+  } catch {
+    return false
   }
-  return false
 }
 
 export function logoutAdmin() {
-  sessionStorage.removeItem('vnumera_auth')
+  localStorage.removeItem('admin_token')
+}
+
+export async function updateAdminCredentials(currentPassword: string, newUsername?: string, newPassword?: string) {
+  const res = await api.updateCredentials({ currentPassword, newUsername, newPassword })
+  localStorage.setItem('admin_token', res.token)
 }

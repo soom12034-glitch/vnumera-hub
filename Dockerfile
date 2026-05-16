@@ -7,8 +7,12 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev && npm rebuild better-sqlite3
+COPY --from=builder /app/dist ./dist
+COPY server ./server
+RUN mkdir -p uploads data
+EXPOSE 3001
+CMD ["node", "server/index.js"]

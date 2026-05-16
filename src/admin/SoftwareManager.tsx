@@ -1,11 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Save, Trash2, X, Edit3, ImagePlus, Check } from 'lucide-react'
-import { loadConfig, saveConfig, type SoftwareItem } from '../data/siteData'
-
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
-}
+import { Plus, Save, Trash2, X, Edit3, ImagePlus, Check, Upload, FileText, Trash } from 'lucide-react'
+import { api } from '../lib/api'
+import type { SoftwareItem } from '../data/siteData'
 
 const emptySoftware: SoftwareItem = {
   id: '',
@@ -24,43 +21,85 @@ const emptySoftware: SoftwareItem = {
 }
 
 export default function SoftwareManager() {
-  const [config, setConfig] = useState(loadConfig())
+  const [software, setSoftware] = useState<SoftwareItem[]>([])
+  const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState<SoftwareItem | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [featureInput, setFeatureInput] = useState('')
   const [platformInput, setPlatformInput] = useState('')
   const [screenshotUrl, setScreenshotUrl] = useState('')
   const [message, setMessage] = useState('')
+  const [uploadingFile, setUploadingFile] = useState(false)
 
-  const software = config.software
+  useEffect(() => {
+    api.getSoftware()
+      .then((data: any[]) => {
+        setSoftware(
+          data.map((item) => ({
+            ...item,
+            id: String(item.id),
+            features: Array.isArray(item.features) ? item.features : [],
+            platforms: Array.isArray(item.platforms) ? item.platforms : [],
+            screenshots: Array.isArray(item.screenshots) ? item.screenshots : [],
+            isService: Boolean(item.isService),
+            featured: Boolean(item.featured),
+          }))
+        )
+      })
+      .catch(() => { })
+      .finally(() => setLoading(false))
+  }, [])
 
   const showMessage = (msg: string) => {
     setMessage(msg)
-    setTimeout(() => setMessage(''), 2000)
+    setTimeout(() => setMessage(''), 3000)
   }
 
-  const save = (sw: SoftwareItem) => {
-    const newSoftware = sw.id
-      ? software.map((s) => (s.id === sw.id ? sw : s))
-      : [...software, { ...sw, id: generateId() }]
-    const newConfig = { ...config, software: newSoftware }
-    setConfig(newConfig)
-    saveConfig(newConfig)
-    setEditing(null)
-    setIsAdding(false)
-    setFeatureInput('')
-    setPlatformInput('')
-    setScreenshotUrl('')
-    showMessage('تم الحفظ بنجاح')
+  const save = async (sw: SoftwareItem) => {
+    try {
+      const payload = {
+        name: sw.name,
+        category: sw.category,
+        description: sw.description,
+        version: sw.version,
+        size: sw.size,
+        downloadUrl: sw.downloadUrl,
+        features: sw.features,
+        platforms: sw.platforms,
+        screenshots: sw.screenshots,
+        featured: sw.featured,
+        isService: sw.isService,
+        image: sw.screenshots[0] || '',
+      }
+
+      if (isAdding) {
+        const res = await api.createSoftware(payload)
+        setSoftware((prev) => [...prev, { ...sw, id: String(res.id) }])
+      } else {
+        await api.updateSoftware(Number(sw.id), payload)
+        setSoftware((prev) => prev.map((s) => (s.id === sw.id ? sw : s)))
+      }
+
+      setEditing(null)
+      setIsAdding(false)
+      setFeatureInput('')
+      setPlatformInput('')
+      setScreenshotUrl('')
+      showMessage('تم الحفظ بنجاح')
+    } catch (e: any) {
+      showMessage(e.message || 'خطأ في الحفظ')
+    }
   }
 
-  const deleteItem = (id: string) => {
+  const deleteItem = async (id: string) => {
     if (!confirm('هل أنت متأكد من حذف هذا البرنامج؟')) return
-    const newSoftware = software.filter((s) => s.id !== id)
-    const newConfig = { ...config, software: newSoftware }
-    setConfig(newConfig)
-    saveConfig(newConfig)
-    showMessage('تم الحذف')
+    try {
+      await api.deleteSoftware(Number(id))
+      setSoftware((prev) => prev.filter((s) => s.id !== id))
+      showMessage('تم الحذف')
+    } catch {
+      showMessage('خطأ في الحذف')
+    }
   }
 
   const startEdit = (item: SoftwareItem) => {
@@ -123,6 +162,48 @@ export default function SoftwareManager() {
     reader.readAsDataURL(file)
   }
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !editing) return
+    setUploadingFile(true)
+    try {
+      const res = await api.uploadFile(file)
+      updateField('downloadUrl', res.url)
+      if (file.size > 0) {
+        updateField('size', formatFileSize(file.size))
+      }
+      showMessage('تم رفع ملف التحميل')
+    } catch {
+      showMessage('فشل رفع الملف')
+    } finally {
+      setUploadingFile(false)
+    }
+  }
+
+  const clearDownloadFile = () => {
+    if (!editing) return
+    updateField('downloadUrl', '')
+    updateField('size', '-')
+  }
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 B'
+    const k = 1024
+    const sizes = ['B', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i]
+  }
+
+  const isUploadedFile = (url?: string) => !!url && url.startsWith('/uploads/')
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64 text-slate-400 text-sm">
+        جاري التحميل...
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {message && (
@@ -157,7 +238,12 @@ export default function SoftwareManager() {
               </div>
               <div>
                 <p className="font-semibold text-white">{item.name}</p>
-                <p className="text-slate-400 text-xs">{item.category} · {item.type}</p>
+                <p className="text-slate-400 text-xs">
+                  {item.category} · {item.type}
+                  {item.downloadUrl && !item.isService && (
+                    <span className="text-emerald-400 mr-2">● ملف متاح</span>
+                  )}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -265,6 +351,40 @@ export default function SoftwareManager() {
                       className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
                     />
                   </div>
+                </div>
+
+                {/* File upload */}
+                <div className="bg-navy-950/50 border border-white/5 rounded-xl p-4 space-y-3">
+                  <label className="block text-xs text-slate-400 mb-1">ملف البرنامج (رفع مباشر)</label>
+
+                  {editing.downloadUrl && isUploadedFile(editing.downloadUrl) ? (
+                    <div className="flex items-center justify-between bg-navy-900 rounded-lg px-3 py-2 border border-white/10">
+                      <div className="flex items-center gap-2 text-sm">
+                        <FileText className="w-4 h-4 text-emerald-400" />
+                        <span className="text-slate-300">{editing.downloadUrl.split('/').pop()}</span>
+                        <span className="text-slate-500 text-xs">{editing.size}</span>
+                      </div>
+                      <button
+                        onClick={clearDownloadFile}
+                        className="text-slate-400 hover:text-red-400 p-1"
+                        title="إزالة الملف"
+                        aria-label="إزالة الملف"
+                      >
+                        <Trash className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <label className={`flex items-center gap-2 ${uploadingFile ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} bg-primary-600 hover:bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors`}>
+                        <Upload className="w-4 h-4" />
+                        {uploadingFile ? 'جاري الرفع...' : 'رفع ملف'}
+                        {!uploadingFile && (
+                          <input type="file" className="hidden" onChange={handleFileUpload} />
+                        )}
+                      </label>
+                      <span className="text-xs text-slate-500">الحد الأقصى 500 ميجا</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-4">

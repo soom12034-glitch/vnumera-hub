@@ -9,11 +9,20 @@ services:
       - "traefik.http.routers.vnumera.entrypoints=web,websecure"
       - "traefik.http.routers.vnumera.tls=true"
       - "traefik.http.routers.vnumera.tls.certresolver=letsencrypt"
-      - "traefik.http.services.vnumera.loadbalancer.server.port=80"
+      - "traefik.http.services.vnumera.loadbalancer.server.port=3001"
     networks:
       - coolify
     restart: unless-stopped
+    volumes:
+      - vnumera_data:/app/data
+      - vnumera_uploads:/app/uploads
 
 networks:
   coolify:
     external: true
+
+volumes:
+  vnumera_data:
+    driver: local
+  vnumera_uploads:
+    driver: local
