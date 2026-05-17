@@ -10,7 +10,7 @@ RUN npm run build
 FROM node:20.12-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && npm install --omit=dev && npm rebuild better-sqlite3
+RUN apk add --no-cache python3 make g++ && npm install --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY server ./server
 RUN mkdir -p uploads data
