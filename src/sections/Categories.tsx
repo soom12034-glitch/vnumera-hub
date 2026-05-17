@@ -75,8 +75,8 @@ export default function Categories() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-400 text-sm font-medium tracking-wide uppercase">Categories</span>
-          <h2 className="heading-lg text-white mt-4 mb-4">تصنيفات البرامج</h2>
+          <span className="text-cyan-500 text-sm font-medium tracking-wide uppercase">Categories</span>
+          <h2 className="heading-lg text-slate-900 mt-4 mb-4">تصنيفات البرامج</h2>
           <p className="body-lg max-w-2xl mx-auto">
             برامجنا مصنفة حسب الاستخدام لتسهيل الوصول للحل المناسب لعملك.
           </p>
@@ -90,14 +90,14 @@ export default function Categories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group glass-card p-6 text-center hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+              className="group glass-card p-6 text-center hover:border-primary-500/40 transition-all duration-500 hover:-translate-y-2 cursor-pointer"
             >
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.color} bg-opacity-10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-500`}>
-                <cat.icon className="w-7 h-7 text-white" />
+                <cat.icon className="w-7 h-7 text-slate-900" />
               </div>
-              <h3 className="text-white font-bold mb-1">{cat.name}</h3>
-              <p className="text-xs text-slate-400 mb-3">{cat.description}</p>
-              <span className="text-xs text-primary-400 font-medium">{cat.count} برنامج</span>
+              <h3 className="text-slate-900 font-bold mb-1">{cat.name}</h3>
+              <p className="text-xs text-slate-500 mb-3">{cat.description}</p>
+              <span className="text-xs text-primary-600 font-medium">{cat.count} برنامج</span>
             </motion.div>
           ))}
         </div>

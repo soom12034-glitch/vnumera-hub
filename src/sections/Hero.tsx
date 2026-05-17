@@ -10,12 +10,12 @@ const highlights = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-gold-500/5 rounded-full blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-500/5 rounded-full blur-[150px]" />
-        <div className="absolute inset-0 opacity-[0.03] grid-pattern" />
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-primary-500/15 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-400/10 rounded-full blur-[180px]" />
+        <div className="absolute inset-0 opacity-[0.12] grid-pattern" />
       </div>
 
       <div className="relative section-padding max-w-7xl mx-auto w-full">
@@ -24,20 +24,20 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-8 shadow-sm"
           >
-            <Layers className="w-4 h-4 text-primary-400" />
-            <span className="text-sm text-slate-300">بوابة البرامج المحاسبية والإدارية</span>
+            <Layers className="w-4 h-4 text-primary-500" />
+            <span className="text-sm text-slate-600">استوديو حلول رقمية للشركات الطموحة</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="heading-xl text-white mb-6 max-w-4xl mx-auto"
+            className="heading-xl text-slate-900 mb-6 max-w-4xl mx-auto"
           >
-            <span className="text-gradient">vNumerav</span> — حلول برمجية
-            <br />لإدارة أعمالك باحترافية
+            <span className="text-gradient">Numera</span> — برمجيات
+            <br />رقمية تصنع فرقاً حقيقياً
           </motion.h1>
 
           <motion.p
@@ -46,8 +46,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="body-lg mb-10 max-w-2xl mx-auto"
           >
-            مجموعة متكاملة من البرامج المحاسبية والإدارية المتقدمة. حمل ما تحتاجه
-            وابدأ في دقائق — بدون تعقيد.
+            منصة تسويقية راقية للبرمجيات الرقمية: نعرض منتجاتنا بأعلى جودة تصميمية
+            ونمنح العميل صورة احترافية من أول نظرة — بدون أسعار على الصفحة.
           </motion.p>
 
           <motion.div
@@ -78,11 +78,11 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                className="glass-card p-5 text-center hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1"
+                className="glass-card p-5 text-center hover:border-primary-500/40 transition-all duration-300 hover:-translate-y-1"
               >
-                <Monitor className="w-6 h-6 text-primary-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white">{item.value}</div>
-                <div className="text-xs text-slate-400">{item.desc}</div>
+                <Monitor className="w-6 h-6 text-primary-500 mx-auto mb-3" />
+                <div className="text-2xl font-bold text-slate-900">{item.value}</div>
+                <div className="text-xs text-slate-500">{item.desc}</div>
               </motion.div>
             ))}
           </motion.div>

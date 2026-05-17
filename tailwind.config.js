@@ -51,8 +51,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'Cairo', 'system-ui', 'sans-serif'],
-        arabic: ['Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
+        sans: ['Manrope', 'Cairo', 'system-ui', 'sans-serif'],
+        arabic: ['Cairo', 'Manrope', 'Tajawal', 'system-ui', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

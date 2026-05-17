@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronUp } from 'lucide-react'
+import BrandLogo from './components/BrandLogo'
 import Hero from './sections/Hero'
 import Apps from './sections/Apps'
 import Featured from './sections/Featured'
@@ -37,19 +38,14 @@ function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-navy-950/80 backdrop-blur-xl border-b border-white/5'
+          ? 'bg-white/80 backdrop-blur-xl border-b border-slate-200'
           : 'bg-transparent'
           }`}
       >
         <div className="section-padding max-w-7xl mx-auto">
           <div className="flex items-center justify-between h-20">
-            <a href="#" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-xl group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-shadow">
-                V
-              </div>
-              <span className="text-2xl font-bold">
-                <span className="text-white">Numera</span>
-              </span>
+            <a href="#" className="flex items-center gap-2 group" aria-label="Numera" title="Numera">
+              <BrandLogo size="md" />
             </a>
 
             <div className="hidden lg:flex items-center gap-8">
@@ -57,7 +53,7 @@ function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-slate-400 hover:text-white transition-colors text-sm font-medium"
+                  className="text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium"
                 >
                   {link.label}
                 </a>
@@ -67,13 +63,13 @@ function Navbar() {
             <div className="hidden lg:flex items-center gap-4">
               <a
                 href="#downloads"
-                className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-semibold rounded-xl text-sm hover:from-primary-500 hover:to-primary-400 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/25"
+                className="px-6 py-2.5 bg-gradient-to-r from-primary-600 via-sky-500 to-emerald-500 text-white font-semibold rounded-xl text-sm hover:from-primary-500 hover:to-emerald-400 transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/25"
               >
                 تحميل البرامج
               </a>
               <Link
                 to="/admin"
-                className="text-slate-500 hover:text-white text-xs transition-colors"
+                className="text-slate-500 hover:text-slate-900 text-xs transition-colors"
                 aria-label="لوحة التحكم"
                 title="لوحة التحكم"
               >
@@ -82,7 +78,7 @@ function Navbar() {
             </div>
 
             <button
-              className="lg:hidden text-white p-2"
+              className="lg:hidden text-slate-900 p-2"
               onClick={() => setMobileOpen(true)}
               aria-label="فتح القائمة"
               title="فتح القائمة"
@@ -99,17 +95,14 @@ function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-navy-950/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-xl lg:hidden"
           >
             <div className="section-padding pt-6">
               <div className="flex justify-between items-center mb-12">
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-xl">
-                    V
-                  </div>
-                  <span className="text-2xl font-bold text-white">Numera</span>
+                  <BrandLogo size="md" />
                 </div>
-                <button onClick={() => setMobileOpen(false)} className="text-white p-2" aria-label="إغلاق القائمة" title="إغلاق القائمة">
+                <button onClick={() => setMobileOpen(false)} className="text-slate-900 p-2" aria-label="إغلاق القائمة" title="إغلاق القائمة">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -119,7 +112,7 @@ function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-2xl font-semibold text-white hover:text-primary-400 transition-colors"
+                    className="text-2xl font-semibold text-slate-900 hover:text-primary-600 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -170,7 +163,7 @@ function ScrollToTop() {
 
 export default function MainSite() {
   return (
-    <div className="min-h-screen bg-navy-950">
+    <div className="min-h-screen marketing-surface">
       <Navbar />
       <main>
         <Hero />

@@ -55,8 +55,8 @@ export default function Featured() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-400 text-sm font-medium tracking-wide uppercase">Featured Software</span>
-          <h2 className="heading-lg text-white mt-4 mb-4">برامجنا المميزة</h2>
+          <span className="text-gold-500 text-sm font-medium tracking-wide uppercase">Featured Software</span>
+          <h2 className="heading-lg text-slate-900 mt-4 mb-4">برامجنا المميزة</h2>
           <p className="body-lg max-w-2xl mx-auto">
             حلول برمجية متكاملة صُممت خصيصاً للسوق السعودي مع دعم كامل للقوانين المحلية.
           </p>
@@ -103,8 +103,8 @@ export default function Featured() {
                             {/* Stats row */}
                             <div className="grid grid-cols-3 gap-1.5">
                               <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 rounded-lg p-1.5 border border-emerald-500/10">
-                                <div className="text-[8px] text-emerald-400 mb-0.5">المبيعات اليوم</div>
-                                <div className="text-sm font-bold text-white">٤٥,٢٣٠ ر.س</div>
+                                <div className="text-[8px] text-emerald-400 mb-0.5">الطلبات اليوم</div>
+                                <div className="text-sm font-bold text-white">٤٥,٢٣٠ طلب</div>
                                 <div className="text-[8px] text-emerald-400/70">+١٢٪ عن الأمس</div>
                               </div>
                               <div className="bg-gradient-to-br from-primary-500/10 to-primary-600/5 rounded-lg p-1.5 border border-primary-500/10">
@@ -121,7 +121,7 @@ export default function Featured() {
                             {/* Chart area */}
                             <div className="bg-slate-800/30 rounded-lg p-2 border border-white/5">
                               <div className="flex items-center justify-between mb-1.5">
-                                <span className="text-[8px] text-slate-300">أداء المبيعات — آخر ٧ أيام</span>
+                                <span className="text-[8px] text-slate-300">أداء الطلبات — آخر ٧ أيام</span>
                                 <span className="text-[8px] text-emerald-400">+٢٣٪</span>
                               </div>
                               <div className="flex items-end gap-1 h-10">
@@ -138,9 +138,9 @@ export default function Featured() {
                               <div className="px-2 py-1 border-b border-white/5 text-[8px] text-slate-300 font-medium">آخر الفواتير</div>
                               <div className="divide-y divide-white/5">
                                 {[
-                                  { id: 'INV-2026-001', date: '١٦/٠٥/٢٠٢٦', amount: '١,٢٥٠ ر.س', status: 'مدفوعة' },
-                                  { id: 'INV-2026-002', date: '١٦/٠٥/٢٠٢٦', amount: '٣٤٠ ر.س', status: 'مدفوعة' },
-                                  { id: 'INV-2026-003', date: '١٥/٠٥/٢٠٢٦', amount: '٨٩٠ ر.س', status: 'معلقة' },
+                                  { id: 'INV-2026-001', date: '١٦/٠٥/٢٠٢٦', amount: '١,٢٥٠ عملية', status: 'مدفوعة' },
+                                  { id: 'INV-2026-002', date: '١٦/٠٥/٢٠٢٦', amount: '٣٤٠ عملية', status: 'مدفوعة' },
+                                  { id: 'INV-2026-003', date: '١٥/٠٥/٢٠٢٦', amount: '٨٩٠ عملية', status: 'معلقة' },
                                 ].map((inv) => (
                                   <div key={inv.id} className="px-2 py-1 flex items-center justify-between">
                                     <div className="flex items-center gap-1.5">
@@ -204,18 +204,18 @@ export default function Featured() {
                                 <div className="text-[8px] text-white">١٥/٠٥/٢٠٢٦ — ١٥/٠٦/٢٠٢٦</div>
                               </div>
                               <div className="bg-white/5 rounded p-1">
-                                <div className="text-[7px] text-slate-500">المبلغ الإجمالي</div>
-                                <div className="text-[8px] text-amber-400 font-bold">٤,٥٠٠ ر.س</div>
+                                <div className="text-[7px] text-slate-500">عدد المعاملات</div>
+                                <div className="text-[8px] text-amber-400 font-bold">٤,٥٠٠ عملية</div>
                               </div>
                             </div>
                             <div className="flex gap-1">
                               <div className="flex-1 bg-primary-500/10 rounded p-1 text-center border border-primary-500/10">
-                                <div className="text-[7px] text-primary-400">الضريبة ١٥٪</div>
-                                <div className="text-[8px] text-white">٦٧٥ ر.س</div>
+                                <div className="text-[7px] text-primary-400">مدة التنفيذ</div>
+                                <div className="text-[8px] text-white">١٥ يوم</div>
                               </div>
                               <div className="flex-1 bg-primary-500/10 rounded p-1 text-center border border-primary-500/10">
-                                <div className="text-[7px] text-primary-400">الإجمالي مع الضريبة</div>
-                                <div className="text-[8px] text-white font-bold">٥,١٧٥ ر.س</div>
+                                <div className="text-[7px] text-primary-400">معدل الالتزام</div>
+                                <div className="text-[8px] text-white font-bold">٩٨٪</div>
                               </div>
                             </div>
                           </div>
@@ -224,9 +224,9 @@ export default function Featured() {
                             <div className="px-2 py-1 border-b border-white/5 text-[8px] text-slate-300 font-medium">سجل الإيجارات الأخيرة</div>
                             <div className="divide-y divide-white/5">
                               {[
-                                { device: 'جهاز مساحة أرضي', client: 'شركة البناء الحديث', days: '٣٠ يوم', amount: '٣,٢٠٠ ر.س' },
-                                { device: 'GPS RTK محمول', client: 'مؤسسة التخطيط', days: '١٥ يوم', amount: '٢,١٠٠ ر.س' },
-                                { device: 'جهاز مساحة أرضي', client: 'مكتب الهندسة', days: '٩٠ يوم', amount: '٨,٥٠٠ ر.س' },
+                                { device: 'جهاز مساحة أرضي', client: 'شركة البناء الحديث', days: '٣٠ يوم', amount: '٣,٢٠٠ عملية' },
+                                { device: 'GPS RTK محمول', client: 'مؤسسة التخطيط', days: '١٥ يوم', amount: '٢,١٠٠ عملية' },
+                                { device: 'جهاز مساحة أرضي', client: 'مكتب الهندسة', days: '٩٠ يوم', amount: '٨,٥٠٠ عملية' },
                               ].map((row, i) => (
                                 <div key={i} className="px-2 py-1 flex items-center justify-between">
                                   <div className="flex items-center gap-1.5">
@@ -253,23 +253,23 @@ export default function Featured() {
 
               <div className={index % 2 === 1 ? 'lg:order-1 lg:text-right' : 'lg:text-right'}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary-500/20 text-primary-300 border border-primary-500/30">
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary-500/15 text-primary-600 border border-primary-500/30">
                     {app.type}
                   </span>
                   <span className="text-xs text-slate-500">{app.size}</span>
                 </div>
 
-                <h3 className="text-3xl font-bold text-white mb-2">{app.name}</h3>
-                <p className="text-lg text-primary-400 mb-4">{app.tagline}</p>
-                <p className="text-slate-400 mb-8 leading-relaxed">{app.description}</p>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">{app.name}</h3>
+                <p className="text-lg text-primary-600 mb-4">{app.tagline}</p>
+                <p className="text-slate-600 mb-8 leading-relaxed">{app.description}</p>
 
                 <div className="grid gap-3 mb-8">
                   {app.features.map((feature) => (
                     <div key={feature} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5 flex-shrink-0">
-                        <Check className="w-3 h-3 text-emerald-400" />
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center mt-0.5 flex-shrink-0">
+                        <Check className="w-3 h-3 text-emerald-500" />
                       </div>
-                      <span className="text-slate-300 text-sm">{feature}</span>
+                      <span className="text-slate-600 text-sm">{feature}</span>
                     </div>
                   ))}
                 </div>

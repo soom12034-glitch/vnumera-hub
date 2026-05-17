@@ -49,8 +49,8 @@ export default function Downloads() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-emerald-400 text-sm font-medium tracking-wide uppercase">Download Center</span>
-          <h2 className="heading-lg text-white mt-4 mb-4">مركز التحميل</h2>
+          <span className="text-emerald-500 text-sm font-medium tracking-wide uppercase">Download Center</span>
+          <h2 className="heading-lg text-slate-900 mt-4 mb-4">مركز التحميل</h2>
           <p className="body-lg max-w-2xl mx-auto">
             حمل البرامج المناسبة لنظام التشغيل الخاص بك. جميع الروابط محدثة ومباشرة.
           </p>
@@ -64,17 +64,17 @@ export default function Downloads() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="glass-card p-6 hover:border-emerald-500/20 transition-all duration-300"
+              className="glass-card p-6 hover:border-emerald-500/30 transition-all duration-300"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                 <div className="flex items-center gap-4 min-w-[200px]">
                   <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-                    <FileArchive className="w-6 h-6 text-emerald-400" />
+                    <FileArchive className="w-6 h-6 text-emerald-500" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold">{app.name}</h3>
+                    <h3 className="text-slate-900 font-bold">{app.name}</h3>
                     <div className="text-xs text-slate-500 mt-1">
-                      {app.version} · {app.size} · {app.type}
+                      {app.version} · {app.type}
                     </div>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function Downloads() {
                     <a
                       key={platform.name}
                       href={platform.url}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-all"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all"
                     >
                       <platform.icon className="w-4 h-4" />
                       {platform.name}
@@ -93,7 +93,7 @@ export default function Downloads() {
                   {app.cloud && (
                     <a
                       href={app.cloud.url}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-600 hover:bg-emerald-500/20 transition-all"
                     >
                       <app.cloud.icon className="w-4 h-4" />
                       {app.cloud.name}

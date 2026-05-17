@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Target, Users, Code2, MapPin } from 'lucide-react'
+import BrandLogo from '../components/BrandLogo'
 
 export default function About() {
   return (
@@ -17,7 +18,7 @@ export default function About() {
           className="text-center mb-16"
         >
           <span className="text-gold-400 text-sm font-medium tracking-wide uppercase">About</span>
-          <h2 className="heading-lg text-white mt-4 mb-4">عن الشركة</h2>
+          <h2 className="heading-lg text-slate-900 mt-4 mb-4">عن الشركة</h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -31,20 +32,14 @@ export default function About() {
               <div className="absolute -inset-4 bg-gradient-to-r from-primary-600/10 to-gold-500/5 rounded-3xl blur-2xl" />
               <div className="relative glass-card p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-xl">
-                    V
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white">vNumerav</h3>
-                    <p className="text-sm text-slate-400">Software Solutions</p>
-                  </div>
+                  <BrandLogo size="sm" subtitle="Digital Business Studio" />
                 </div>
-                <p className="text-slate-300 leading-relaxed mb-6">
+                <p className="text-slate-600 leading-relaxed mb-6">
                   شركة برمجيات متخصصة في تطوير حلول المحاسبة والإدارة للشركات والمحلات
                   العربية. نقدم برامج حقيقية تعمل على الأجهزة المحلية والسحابة مع دعم كامل
                   للوائح هيئة الزكاة والضريبة ZATCA والفواتير الإلكترونية.
                 </p>
-                <p className="text-slate-300 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed">
                   محفظتنا تشمل CashierPro Cloud (منصة سحابية متكاملة)، Cashier Pro (نقاط بيع
                   للسوبرماركت)، و Surveyor Pro ERP (إدارة أجهزة المساحة والإيجارات).
                 </p>
@@ -73,9 +68,9 @@ export default function About() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="glass-card p-5 text-center hover:border-primary-500/30 transition-all duration-300"
               >
-                <item.icon className="w-6 h-6 text-primary-400 mx-auto mb-3" />
-                <h4 className="text-white font-bold text-sm mb-1">{item.label}</h4>
-                <p className="text-slate-400 text-xs">{item.desc}</p>
+                <item.icon className="w-6 h-6 text-primary-500 mx-auto mb-3" />
+                <h4 className="text-slate-900 font-bold text-sm mb-1">{item.label}</h4>
+                <p className="text-slate-500 text-xs">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>

@@ -43,8 +43,8 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-rose-400 text-sm font-medium tracking-wide uppercase">Support</span>
-          <h2 className="heading-lg text-white mt-4 mb-4">الدعم الفني والتواصل</h2>
+          <span className="text-rose-500 text-sm font-medium tracking-wide uppercase">Support</span>
+          <h2 className="heading-lg text-slate-900 mt-4 mb-4">الدعم الفني والتواصل</h2>
           <p className="body-lg max-w-2xl mx-auto">
             فريقنا جاهز لمساعدتك في اختيار البرنامج المناسب وإجابة استفساراتك.
           </p>
@@ -59,15 +59,15 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group glass-card p-6 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 text-right block"
+              className="group glass-card p-6 hover:border-primary-500/40 transition-all duration-500 hover:-translate-y-2 text-right block"
             >
               <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
-                <channel.icon className="w-6 h-6 text-primary-400" />
+                <channel.icon className="w-6 h-6 text-primary-500" />
               </div>
-              <h3 className="text-white font-bold mb-1">{channel.title}</h3>
-              <p className="text-primary-300 font-medium mb-2">{channel.value}</p>
-              <p className="text-slate-400 text-sm mb-4">{channel.desc}</p>
-              <span className="inline-flex items-center gap-1 text-sm text-primary-400 group-hover:text-primary-300 transition-colors">
+              <h3 className="text-slate-900 font-bold mb-1">{channel.title}</h3>
+              <p className="text-primary-600 font-medium mb-2">{channel.value}</p>
+              <p className="text-slate-500 text-sm mb-4">{channel.desc}</p>
+              <span className="inline-flex items-center gap-1 text-sm text-primary-600 group-hover:text-primary-500 transition-colors">
                 {channel.action}
                 <ExternalLink className="w-3 h-3" />
               </span>
@@ -83,21 +83,21 @@ export default function Contact() {
           className="glass-card p-8 max-w-3xl mx-auto"
         >
           <div className="flex items-center gap-3 mb-6">
-            <Clock className="w-5 h-5 text-gold-400" />
-            <h3 className="text-white font-bold">ساعات العمل</h3>
+            <Clock className="w-5 h-5 text-gold-500" />
+            <h3 className="text-slate-900 font-bold">ساعات العمل</h3>
           </div>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="flex justify-between py-3 border-b border-white/5">
-              <span className="text-slate-300">السبت – الأربعاء</span>
-              <span className="text-white">٩:٠٠ ص – ٩:٠٠ م</span>
+            <div className="flex justify-between py-3 border-b border-slate-200/70">
+              <span className="text-slate-600">السبت – الأربعاء</span>
+              <span className="text-slate-900">٩:٠٠ ص – ٩:٠٠ م</span>
             </div>
-            <div className="flex justify-between py-3 border-b border-white/5">
-              <span className="text-slate-300">الخميس</span>
-              <span className="text-white">٩:٠٠ ص – ٥:٠٠ م</span>
+            <div className="flex justify-between py-3 border-b border-slate-200/70">
+              <span className="text-slate-600">الخميس</span>
+              <span className="text-slate-900">٩:٠٠ ص – ٥:٠٠ م</span>
             </div>
-            <div className="flex justify-between py-3 border-b border-white/5 md:col-span-2">
-              <span className="text-slate-300">الجمعة</span>
-              <span className="text-gold-400">إجازة</span>
+            <div className="flex justify-between py-3 border-b border-slate-200/70 md:col-span-2">
+              <span className="text-slate-600">الجمعة</span>
+              <span className="text-gold-500">إجازة</span>
             </div>
           </div>
         </motion.div>

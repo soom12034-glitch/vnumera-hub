@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Upload, Trash2, ImagePlus, FileArchive, Check, X, Folder } from 'lucide-react'
+import { api } from '../lib/api'
 
 interface StoredFile {
   id: string
@@ -38,7 +39,9 @@ export default function FileManager() {
   const [uploadType, setUploadType] = useState<'image' | 'software'>('image')
   const [newUrl, setNewUrl] = useState('')
   const [newName, setNewName] = useState('')
+  const [uploadingFile, setUploadingFile] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
+  const softwareInputRef = useRef<HTMLInputElement>(null)
 
   const showMessage = (msg: string) => {
     setMessage(msg)
@@ -94,6 +97,29 @@ export default function FileManager() {
     showMessage(uploadType === 'image' ? 'تم إضافة رابط الصورة' : 'تم إضافة رابط البرنامج')
   }
 
+  const handleSoftwareUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    try {
+      setUploadingFile(true)
+      const res = await api.uploadFile(file)
+      addFile({
+        id: res?.id ? String(res.id) : Date.now().toString(),
+        name: res?.name || file.name,
+        type: 'software',
+        size: formatSize(res?.size || file.size),
+        url: res?.url || '',
+        date: new Date().toLocaleDateString('ar-SA'),
+      })
+      showMessage('تم رفع البرنامج بنجاح')
+    } catch (err: any) {
+      showMessage(err?.message || 'فشل رفع البرنامج')
+    } finally {
+      setUploadingFile(false)
+      if (softwareInputRef.current) softwareInputRef.current.value = ''
+    }
+  }
+
   const images = files.filter((f) => f.type === 'image')
   const software = files.filter((f) => f.type === 'software')
 
@@ -119,22 +145,20 @@ export default function FileManager() {
         <div className="flex gap-2">
           <button
             onClick={() => setUploadType('image')}
-            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-              uploadType === 'image'
-                ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
-                : 'bg-navy-950 text-slate-400 border border-white/10'
-            }`}
+            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${uploadType === 'image'
+              ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
+              : 'bg-navy-950 text-slate-400 border border-white/10'
+              }`}
           >
             <ImagePlus className="w-4 h-4 inline-block ml-1" />
             صورة
           </button>
           <button
             onClick={() => setUploadType('software')}
-            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-              uploadType === 'software'
-                ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
-                : 'bg-navy-950 text-slate-400 border border-white/10'
-            }`}
+            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${uploadType === 'software'
+              ? 'bg-primary-600/20 text-primary-400 border border-primary-500/30'
+              : 'bg-navy-950 text-slate-400 border border-white/10'
+              }`}
           >
             <FileArchive className="w-4 h-4 inline-block ml-1" />
             برنامج
@@ -174,11 +198,27 @@ export default function FileManager() {
 
         {uploadType === 'software' && (
           <div className="space-y-3">
+            <div
+              onClick={() => !uploadingFile && softwareInputRef.current?.click()}
+              className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center cursor-pointer hover:border-primary-500/50 hover:bg-primary-500/5 transition-all"
+            >
+              <FileArchive className="w-8 h-8 text-slate-500 mx-auto mb-2" />
+              <p className="text-slate-400 text-sm">
+                {uploadingFile ? 'جاري رفع الملف...' : 'اضغط لرفع ملف البرنامج'}
+              </p>
+              <p className="text-slate-600 text-xs mt-1">الحد الأقصى 500MB</p>
+              <input
+                ref={softwareInputRef}
+                type="file"
+                className="hidden"
+                onChange={handleSoftwareUpload}
+                aria-label="رفع ملف البرنامج"
+              />
+            </div>
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
               <p className="text-amber-400 text-sm font-medium mb-1">ملاحظة</p>
               <p className="text-amber-200/70 text-xs leading-relaxed">
-                الملفات الكبيرة لا يمكن رفعها من المتصفح. ضع ملفات التثبيت في مجلد public/downloads/ في الكود،
-                ثم أضف اسم الملف هنا لإنشاء رابط التحميل.
+                لو الملف أكبر من 500MB ارفع الملف خارجيًا وضع رابط التحميل هنا.
               </p>
             </div>
             <div className="flex gap-2">
