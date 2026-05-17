@@ -49,20 +49,24 @@ export default function Featured() {
 
   useEffect(() => {
     loadConfig().then((config) => {
-      const featured = config.software.filter((s: any) => s.featured)
-      if (featured.length > 0) {
-        setFeaturedApps(featured.map((s: any) => ({
-          id: s.id,
-          name: s.name,
-          tagline: s.category,
-          description: s.description,
-          image: s.screenshots[0] || posImage,
-          features: s.features,
-          platforms: s.platforms,
-          type: s.type,
-          size: s.size,
-        })))
+      if (config?.software) {
+        const featured = config.software.filter((s: any) => s.featured)
+        if (featured.length > 0) {
+          setFeaturedApps(featured.map((s: any) => ({
+            id: s.id,
+            name: s.name,
+            tagline: s.category,
+            description: s.description,
+            image: s.screenshots[0] || posImage,
+            features: s.features,
+            platforms: s.platforms,
+            type: s.type,
+            size: s.size,
+          })))
+        }
       }
+    }).catch(() => {
+      // Keep default on error
     })
   }, [])
 

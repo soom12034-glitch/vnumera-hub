@@ -36,17 +36,21 @@ export default function Contact() {
 
   useEffect(() => {
     loadConfig().then((config) => {
-      const activeContacts = config.contacts.filter((c: any) => c.active)
-      if (activeContacts.length > 0) {
-        setChannels(activeContacts.map((c: any) => ({
-          icon: c.icon === 'Phone' ? Phone : c.icon === 'Mail' ? Mail : MessageSquare,
-          title: c.label,
-          value: c.value,
-          desc: 'متاح للتواصل',
-          action: 'تواصل',
-          href: c.href,
-        })))
+      if (config?.contacts) {
+        const activeContacts = config.contacts.filter((c: any) => c.active)
+        if (activeContacts.length > 0) {
+          setChannels(activeContacts.map((c: any) => ({
+            icon: c.icon === 'Phone' ? Phone : c.icon === 'Mail' ? Mail : MessageSquare,
+            title: c.label,
+            value: c.value,
+            desc: 'متاح للتواصل',
+            action: 'تواصل',
+            href: c.href,
+          })))
+        }
       }
+    }).catch(() => {
+      // Keep default on error
     })
   }, [])
 

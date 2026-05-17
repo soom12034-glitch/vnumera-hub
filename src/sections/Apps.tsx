@@ -36,7 +36,13 @@ export default function Apps() {
   const [software, setSoftware] = useState<SoftwareItem[]>([])
 
   useEffect(() => {
-    loadConfig().then((config) => setSoftware(config.software))
+    loadConfig().then((config) => {
+      if (config?.software) {
+        setSoftware(config.software)
+      }
+    }).catch(() => {
+      // Keep default empty array on error
+    })
   }, [])
   return (
     <section id="apps" className="relative py-24">

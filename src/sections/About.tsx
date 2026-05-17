@@ -9,7 +9,13 @@ export default function About() {
   const [company, setCompany] = useState<any>(null)
 
   useEffect(() => {
-    loadConfig().then((config) => setCompany(config.company))
+    loadConfig().then((config) => {
+      if (config?.company) {
+        setCompany(config.company)
+      }
+    }).catch(() => {
+      // Keep null on error
+    })
   }, [])
 
   if (!company) return null

@@ -39,7 +39,12 @@ export default function Hero() {
 
   if (!hero) return null
 
-  const highlights = hero.stats
+  const highlights = hero.stats || [
+    { label: 'برنامج', value: '٨+', desc: 'نظام محاسبي' },
+    { label: 'مستخدم', value: '١٠K+', desc: 'تحميل نشط' },
+    { label: 'متوافق', value: 'ZATCA', desc: 'الفاتورة الإلكترونية' },
+    { label: 'يعمل', value: 'Cloud', desc: 'و Offline' },
+  ]
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
       <div className="absolute inset-0 overflow-hidden">
