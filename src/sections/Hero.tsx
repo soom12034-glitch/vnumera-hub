@@ -1,16 +1,21 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Monitor, Download, Layers, ShieldCheck, BadgeCheck, Sparkles } from 'lucide-react'
 import heroPrimary from '../assets/marketing/hero-primary.jpg'
 import heroPos from '../assets/marketing/hero-pos.jpg'
 import heroDashboard from '../assets/marketing/hero-dashboard.jpg'
-import { loadConfig } from '../data/siteData'
 
 const heroImages = {
   primary: heroPrimary,
   pos: heroPos,
   dashboard: heroDashboard,
 }
+
+const highlights = [
+  { label: 'برنامج', value: '٨+', desc: 'نظام محاسبي' },
+  { label: 'مستخدم', value: '١٠K+', desc: 'تحميل نشط' },
+  { label: 'متوافق', value: 'ZATCA', desc: 'الفاتورة الإلكترونية' },
+  { label: 'يعمل', value: 'Cloud', desc: 'و Offline' },
+]
 
 const trustBadges = [
   {
@@ -31,20 +36,6 @@ const trustBadges = [
 ]
 
 export default function Hero() {
-  const [hero, setHero] = useState<any>(null)
-
-  useEffect(() => {
-    loadConfig().then((config) => setHero(config.hero))
-  }, [])
-
-  if (!hero) return null
-
-  const highlights = hero.stats || [
-    { label: 'برنامج', value: '٨+', desc: 'نظام محاسبي' },
-    { label: 'مستخدم', value: '١٠K+', desc: 'تحميل نشط' },
-    { label: 'متوافق', value: 'ZATCA', desc: 'الفاتورة الإلكترونية' },
-    { label: 'يعمل', value: 'Cloud', desc: 'و Offline' },
-  ]
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
       <div className="absolute inset-0 overflow-hidden">

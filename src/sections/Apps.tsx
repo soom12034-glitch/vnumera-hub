@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Monitor, Cloud, ArrowLeft, ShoppingCart, MapPin, Lightbulb, Mail } from 'lucide-react'
 import posImage from '../assets/marketing/hero-pos.jpg'
 import dashboardImage from '../assets/marketing/hero-dashboard.jpg'
 import warehouseImage from '../assets/marketing/warehouse.jpg'
-import { loadConfig, type SoftwareItem } from '../data/siteData'
+import { defaultSoftware, type SoftwareItem } from '../data/siteData'
 
 const showcaseCards = [
   {
@@ -33,17 +32,7 @@ const iconMap: Record<string, any> = {
 }
 
 export default function Apps() {
-  const [software, setSoftware] = useState<SoftwareItem[]>([])
-
-  useEffect(() => {
-    loadConfig().then((config) => {
-      if (config?.software) {
-        setSoftware(config.software)
-      }
-    }).catch(() => {
-      // Keep default empty array on error
-    })
-  }, [])
+  const software = defaultSoftware
   return (
     <section id="apps" className="relative py-24">
       <div className="absolute inset-0 overflow-hidden">

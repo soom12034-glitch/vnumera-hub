@@ -155,7 +155,8 @@ export async function loadConfig(): Promise<SiteConfig> {
     const data = await api.getConfig()
     return { ...defaultConfig, ...data }
   } catch {
-    return { ...defaultConfig }
+    console.log('Using default config (API not available)')
+    return defaultConfig
   }
 }
 

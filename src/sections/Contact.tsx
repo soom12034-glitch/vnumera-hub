@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MessageSquare, Clock, ExternalLink } from 'lucide-react'
 import supportImage from '../assets/marketing/support.jpg'
-import { loadConfig } from '../data/siteData'
 
-const defaultChannels = [
+const channels = [
   {
     icon: Phone,
     title: 'الدعم الفني',
@@ -32,27 +30,6 @@ const defaultChannels = [
 ]
 
 export default function Contact() {
-  const [channels, setChannels] = useState(defaultChannels)
-
-  useEffect(() => {
-    loadConfig().then((config) => {
-      if (config?.contacts) {
-        const activeContacts = config.contacts.filter((c: any) => c.active)
-        if (activeContacts.length > 0) {
-          setChannels(activeContacts.map((c: any) => ({
-            icon: c.icon === 'Phone' ? Phone : c.icon === 'Mail' ? Mail : MessageSquare,
-            title: c.label,
-            value: c.value,
-            desc: 'متاح للتواصل',
-            action: 'تواصل',
-            href: c.href,
-          })))
-        }
-      }
-    }).catch(() => {
-      // Keep default on error
-    })
-  }, [])
 
   return (
     <section id="contact" className="relative py-24">
