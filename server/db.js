@@ -3,6 +3,7 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const pool = new Pool({
+  // eslint-disable-next-line no-undef
   connectionString: process.env.DATABASE_URL || 'postgres://postgres:ZGcxshNXnl4D9UsVfUEhbuCZQQmtGCM6118D8dsz8P9RxDegCnHCetpYWQsp3vzx@af959i5yah06ex9iur9xku7u:5432/postgres',
   ssl: false
 });
