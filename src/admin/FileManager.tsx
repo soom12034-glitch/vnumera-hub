@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Upload, Trash2, ImagePlus, FileArchive, Check, X, Folder } from 'lucide-react'
 import { api } from '../lib/api'
+import { defaultSoftware } from '../data/siteData'
 
 interface StoredFile {
   id: string
@@ -11,6 +12,7 @@ interface StoredFile {
   data?: string
   url?: string
   date: string
+  softwareId?: string
 }
 
 const STORAGE_KEY = 'vnumera_files'
@@ -40,6 +42,7 @@ export default function FileManager() {
   const [newUrl, setNewUrl] = useState('')
   const [newName, setNewName] = useState('')
   const [uploadingFile, setUploadingFile] = useState(false)
+  const [selectedSoftwareId, setSelectedSoftwareId] = useState<string>('')
   const imageInputRef = useRef<HTMLInputElement>(null)
   const softwareInputRef = useRef<HTMLInputElement>(null)
 
@@ -74,6 +77,7 @@ export default function FileManager() {
           size: formatSize(file.size),
           data: reader.result,
           date: new Date().toLocaleDateString('ar-SA'),
+          softwareId: selectedSoftwareId || undefined,
         })
         showMessage('تم رفع الصورة')
       }
@@ -91,6 +95,7 @@ export default function FileManager() {
       size: '-',
       url: newUrl.trim(),
       date: new Date().toLocaleDateString('ar-SA'),
+      softwareId: selectedSoftwareId || undefined,
     })
     setNewName('')
     setNewUrl('')
@@ -110,6 +115,7 @@ export default function FileManager() {
         size: formatSize(res?.size || file.size),
         url: res?.url || '',
         date: new Date().toLocaleDateString('ar-SA'),
+        softwareId: selectedSoftwareId || undefined,
       })
       showMessage('تم رفع البرنامج بنجاح')
     } catch (err: any) {
@@ -163,6 +169,21 @@ export default function FileManager() {
             <FileArchive className="w-4 h-4 inline-block ml-1" />
             برنامج
           </button>
+        </div>
+
+        <div>
+          <label className="block text-xs text-slate-400 mb-1">ربط ببرنامج (اختياري)</label>
+          <select
+            value={selectedSoftwareId}
+            onChange={(e) => setSelectedSoftwareId(e.target.value)}
+            className="w-full bg-navy-950 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
+            title="اختيار البرنامج المرتبط بالملف"
+          >
+            <option value="">بدون ربط</option>
+            {defaultSoftware.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
         </div>
 
         {uploadType === 'image' && (

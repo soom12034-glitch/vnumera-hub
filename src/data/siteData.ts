@@ -52,7 +52,7 @@ export interface SiteConfig {
   socials: SocialLink[]
 }
 
-const defaultSoftware: SoftwareItem[] = [
+export const defaultSoftware: SoftwareItem[] = [
   {
     id: 'cashierpro-cloud',
     name: 'CashierPro Cloud',

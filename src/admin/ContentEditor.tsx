@@ -1,14 +1,36 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Save, Check, Plus, Globe, Phone, ToggleLeft, ToggleRight, Trash2 } from 'lucide-react'
+import { Save, Check, Plus, Globe, Phone, ToggleLeft, ToggleRight, Trash2, FolderOpen, X } from 'lucide-react'
 import { loadConfig, saveConfig, type SiteConfig } from '../data/siteData'
+
+const STORAGE_KEY = 'vnumera_files'
+
+interface StoredFile {
+  id: string
+  name: string
+  type: 'image' | 'software'
+  size: string
+  data?: string
+  url?: string
+  date: string
+  softwareId?: string
+}
+
+function loadFiles(): StoredFile[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch { /* ignore */ }
+  return []
+}
 
 export default function ContentEditor() {
   const [config, setConfig] = useState<SiteConfig | null>(null)
   const [message, setMessage] = useState('')
-  const [activeTab, setActiveTab] = useState<'company' | 'hero' | 'contacts' | 'socials'>('company')
+  const [activeTab, setActiveTab] = useState<'company' | 'hero' | 'contacts' | 'socials' | 'software'>('company')
   const [newContact, setNewContact] = useState({ label: '', value: '', icon: 'Phone', href: '', active: true })
   const [newSocial, setNewSocial] = useState({ label: '', url: '', active: true })
+  const [files] = useState<StoredFile[]>(loadFiles())
 
   useEffect(() => {
     loadConfig().then(setConfig)
@@ -53,6 +75,31 @@ export default function ContentEditor() {
       ...config,
       socials: config.socials.map((s) => s.id === id ? { ...s, active: !s.active } : s)
     })
+  }
+
+  const updateSoftwareDownloadUrl = (softwareId: string, url: string) => {
+    setConfig({
+      ...config,
+      software: config.software.map((s) => s.id === softwareId ? { ...s, downloadUrl: url } : s)
+    })
+  }
+
+  const addScreenshotToSoftware = (softwareId: string, fileUrl: string) => {
+    setConfig({
+      ...config,
+      software: config.software.map((s) => s.id === softwareId ? { ...s, screenshots: [...s.screenshots, fileUrl] } : s)
+    })
+  }
+
+  const removeScreenshotFromSoftware = (softwareId: string, index: number) => {
+    setConfig({
+      ...config,
+      software: config.software.map((s) => s.id === softwareId ? { ...s, screenshots: s.screenshots.filter((_, i) => i !== index) } : s)
+    })
+  }
+
+  const getFilesForSoftware = (softwareId: string) => {
+    return files.filter((f) => f.softwareId === softwareId)
   }
 
   const deleteContact = (id: string) => {
@@ -100,7 +147,7 @@ export default function ContentEditor() {
       )}
 
       <div className="flex gap-2 bg-navy-900/50 border border-white/10 rounded-xl p-1">
-        {(['company', 'hero', 'contacts', 'socials'] as const).map((tab) => (
+        {(['company', 'hero', 'software', 'contacts', 'socials'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -111,6 +158,7 @@ export default function ContentEditor() {
           >
             {tab === 'company' && 'الشركة'}
             {tab === 'hero' && 'الصفحة الرئيسية'}
+            {tab === 'software' && 'البرامج'}
             {tab === 'contacts' && 'قنوات التواصل'}
             {tab === 'socials' && 'مواقع التواصل'}
           </button>
@@ -222,6 +270,83 @@ export default function ContentEditor() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'software' && (
+        <div className="bg-navy-900/50 border border-white/10 rounded-2xl p-5 space-y-4">
+          <div className="flex items-center gap-2 text-white font-bold mb-2">
+            <FolderOpen className="w-5 h-5 text-primary-400" />
+            البرامج والملفات
+          </div>
+          {config.software.map((software) => {
+            const softwareFiles = getFilesForSoftware(software.id)
+            return (
+              <div key={software.id} className="bg-navy-950 rounded-xl p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-white font-semibold">{software.name}</h3>
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-400 mb-1">رابط التحميل</label>
+                  <div className="flex gap-2">
+                    <input
+                      value={software.downloadUrl || ''}
+                      onChange={(e) => updateSoftwareDownloadUrl(software.id, e.target.value)}
+                      placeholder="رابط التحميل"
+                      className="flex-1 bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
+                      title="رابط التحميل"
+                    />
+                    <select
+                      onChange={(e) => {
+                        const file = softwareFiles.find((f) => f.id === e.target.value)
+                        if (file?.url) updateSoftwareDownloadUrl(software.id, file.url)
+                      }}
+                      className="bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
+                      title="اختيار ملف من FileManager"
+                    >
+                      <option value="">من FileManager</option>
+                      {softwareFiles.filter((f) => f.type === 'software').map((f) => (
+                        <option key={f.id} value={f.id}>{f.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-400 mb-1">اللقطات</label>
+                  <div className="grid grid-cols-4 gap-2 mb-2">
+                    {software.screenshots.map((screenshot, idx) => (
+                      <div key={idx} className="relative group">
+                        <img src={screenshot} alt={`screenshot-${idx}`} className="w-full h-20 object-cover rounded-lg" />
+                        <button
+                          onClick={() => removeScreenshotFromSoftware(software.id, idx)}
+                          className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 text-white p-1 rounded"
+                          title="حذف"
+                          aria-label="حذف"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <select
+                      onChange={(e) => {
+                        const file = softwareFiles.find((f) => f.id === e.target.value)
+                        if (file?.url || file?.data) addScreenshotToSoftware(software.id, file.url || file.data || '')
+                      }}
+                      className="flex-1 bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none"
+                      title="إضافة لقطة من FileManager"
+                    >
+                      <option value="">إضافة لقطة من FileManager</option>
+                      {softwareFiles.filter((f) => f.type === 'image').map((f) => (
+                        <option key={f.id} value={f.id}>{f.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
 
