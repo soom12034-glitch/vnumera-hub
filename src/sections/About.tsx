@@ -1,9 +1,18 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Target, Users, Code2, MapPin } from 'lucide-react'
 import BrandLogo from '../components/BrandLogo'
 import teamImage from '../assets/marketing/team-collab.jpg'
+import { loadConfig } from '../data/siteData'
 
 export default function About() {
+  const [company, setCompany] = useState<any>(null)
+
+  useEffect(() => {
+    loadConfig().then((config) => setCompany(config.company))
+  }, [])
+
+  if (!company) return null
   return (
     <section id="about" className="relative py-24">
       <div className="absolute inset-0 overflow-hidden">

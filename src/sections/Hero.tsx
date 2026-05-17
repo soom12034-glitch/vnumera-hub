@@ -1,15 +1,10 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Monitor, Download, Layers, ShieldCheck, BadgeCheck, Sparkles } from 'lucide-react'
 import heroPrimary from '../assets/marketing/hero-primary.jpg'
 import heroPos from '../assets/marketing/hero-pos.jpg'
 import heroDashboard from '../assets/marketing/hero-dashboard.jpg'
-
-const highlights = [
-  { label: 'برنامج', value: '٨+', desc: 'نظام محاسبي' },
-  { label: 'مستخدم', value: '١٠K+', desc: 'تحميل نشط' },
-  { label: 'متوافق', value: 'ZATCA', desc: 'الفاتورة الإلكترونية' },
-  { label: 'يعمل', value: 'Cloud', desc: 'و Offline' },
-]
+import { loadConfig } from '../data/siteData'
 
 const heroImages = {
   primary: heroPrimary,
@@ -36,6 +31,15 @@ const trustBadges = [
 ]
 
 export default function Hero() {
+  const [hero, setHero] = useState<any>(null)
+
+  useEffect(() => {
+    loadConfig().then((config) => setHero(config.hero))
+  }, [])
+
+  if (!hero) return null
+
+  const highlights = hero.stats
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
       <div className="absolute inset-0 overflow-hidden">
@@ -100,7 +104,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.4 }}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-xl"
             >
-              {highlights.map((item, index) => (
+              {highlights.map((item: any, index: number) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, scale: 0.9 }}

@@ -14,6 +14,7 @@ export interface SoftwareItem {
   isService?: boolean
   downloadUrl?: string
   screenshots: string[]
+  iconName?: string
 }
 
 export interface ContactChannel {
@@ -66,6 +67,7 @@ export const defaultSoftware: SoftwareItem[] = [
     featured: true,
     downloadUrl: 'https://cashierpro-cloud.com/?public=true',
     screenshots: [],
+    iconName: 'Cloud',
   },
   {
     id: 'cashierpro-desktop',
@@ -80,6 +82,7 @@ export const defaultSoftware: SoftwareItem[] = [
     featured: true,
     downloadUrl: '#download-cashierpro-windows',
     screenshots: [],
+    iconName: 'ShoppingCart',
   },
   {
     id: 'custom-software',
@@ -95,6 +98,7 @@ export const defaultSoftware: SoftwareItem[] = [
     isService: true,
     downloadUrl: '',
     screenshots: [],
+    iconName: 'Lightbulb',
   },
   {
     id: 'surveyor-pro',
@@ -109,6 +113,7 @@ export const defaultSoftware: SoftwareItem[] = [
     featured: true,
     downloadUrl: '#download-surveyor-windows',
     screenshots: [],
+    iconName: 'MapPin',
   },
 ]
 

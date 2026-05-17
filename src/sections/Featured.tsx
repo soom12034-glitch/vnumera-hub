@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Monitor, Download, ArrowLeft } from 'lucide-react'
 import posImage from '../assets/marketing/hero-pos.jpg'
 import analyticsImage from '../assets/marketing/featured-analytics.jpg'
+import { loadConfig } from '../data/siteData'
 
-const featuredApps = [
+const defaultFeaturedApps = [
   {
     id: 'cashierpro-cloud',
     name: 'CashierPro Cloud',
@@ -29,20 +31,41 @@ const featuredApps = [
     description: 'نظام إدارة موارد متكامل لمجال بيع وإيجار أجهزة المساحة والمختبرات. يغطي الفواتير والإيجارات والعقود والتقارير الضريبية مع نسخ احتياطي ذكي وترخيص مرن.',
     image: analyticsImage,
     features: [
-      'فواتير مبيعات وشراء مع سجل العملاء والموردين',
-      'نظام إيجارات مرن لأجهزة المساحة والمختبرات',
-      'عقود ومستندات مؤرشفة رقمياً',
-      'تقارير ضريبية ومالية متوافقة مع الأنظمة المحلية',
-      'نسخ احتياطي silent تلقائي + snapshots',
-      'واجهة عربية/إنجليزية مع دعم RTL',
+      'فواتير مبيعات وشراء متكاملة',
+      'نظام الإيجارات والعقود',
+      'سجل العملاء والموردين',
+      'تقارير ضريبية ومالية شاملة',
+      'نسخ احتياطي تلقائي',
+      'ترخيص مرن حسب الحاجة',
     ],
-    platforms: ['Windows 10/11 (Electron)'],
+    platforms: ['Windows'],
     type: 'Desktop',
     size: '~75 MB',
   },
 ]
 
 export default function Featured() {
+  const [featuredApps, setFeaturedApps] = useState(defaultFeaturedApps)
+
+  useEffect(() => {
+    loadConfig().then((config) => {
+      const featured = config.software.filter((s: any) => s.featured)
+      if (featured.length > 0) {
+        setFeaturedApps(featured.map((s: any) => ({
+          id: s.id,
+          name: s.name,
+          tagline: s.category,
+          description: s.description,
+          image: s.screenshots[0] || posImage,
+          features: s.features,
+          platforms: s.platforms,
+          type: s.type,
+          size: s.size,
+        })))
+      }
+    })
+  }, [])
+
   return (
     <section id="featured" className="relative py-24">
       <div className="absolute inset-0 overflow-hidden">
