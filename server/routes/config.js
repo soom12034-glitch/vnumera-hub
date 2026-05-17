@@ -4,35 +4,43 @@ import { verifyToken } from '../middleware/auth.js';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  const row = db.prepare('SELECT * FROM config WHERE id = 1').get();
-  if (!row) return res.status(500).json({ error: 'Config not found' });
+router.get('/', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM config WHERE id = 1');
+    if (!rows[0]) return res.status(500).json({ error: 'Config not found' });
 
-  res.json({
-    company: JSON.parse(row.company),
-    hero: JSON.parse(row.hero),
-    stats: JSON.parse(row.stats),
-    contacts: JSON.parse(row.contacts),
-    socials: JSON.parse(row.socials)
-  });
+    res.json({
+      company: JSON.parse(rows[0].company),
+      hero: JSON.parse(rows[0].hero),
+      stats: JSON.parse(rows[0].stats),
+      contacts: JSON.parse(rows[0].contacts),
+      socials: JSON.parse(rows[0].socials)
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.put('/', verifyToken, (req, res) => {
-  const { company, hero, stats, contacts, socials } = req.body;
+router.put('/', verifyToken, async (req, res) => {
+  try {
+    const { company, hero, stats, contacts, socials } = req.body;
 
-  db.prepare(`
-    UPDATE config SET
-      company = ?, hero = ?, stats = ?, contacts = ?, socials = ?, updated_at = CURRENT_TIMESTAMP
-    WHERE id = 1
-  `).run(
-    JSON.stringify(company),
-    JSON.stringify(hero),
-    JSON.stringify(stats),
-    JSON.stringify(contacts),
-    JSON.stringify(socials)
-  );
+    await db.query(`
+      UPDATE config SET
+        company = $1, hero = $2, stats = $3, contacts = $4, socials = $5, updated_at = CURRENT_TIMESTAMP
+      WHERE id = 1
+    `, [
+      JSON.stringify(company),
+      JSON.stringify(hero),
+      JSON.stringify(stats),
+      JSON.stringify(contacts),
+      JSON.stringify(socials)
+    ]);
 
-  res.json({ success: true });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 export default router;

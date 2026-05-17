@@ -29,37 +29,50 @@ const upload = multer({
 
 const router = Router();
 
-router.post('/', verifyToken, upload.single('file'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+router.post('/', verifyToken, upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
-  const result = db.prepare(`
-    INSERT INTO files (original_name, filename, mime_type, size, path)
-    VALUES (?, ?, ?, ?, ?)
-  `).run(
-    req.file.originalname,
-    req.file.filename,
-    req.file.mimetype,
-    req.file.size,
-    `/uploads/${req.file.filename}`
-  );
+    const result = await db.query(`
+      INSERT INTO files (original_name, filename, mime_type, size, path)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id
+    `, [
+      req.file.originalname,
+      req.file.filename,
+      req.file.mimetype,
+      req.file.size,
+      `/uploads/${req.file.filename}`
+    ]);
 
-  res.json({
-    id: result.lastInsertRowid,
-    url: `/uploads/${req.file.filename}`,
-    name: req.file.originalname,
-    size: req.file.size
-  });
+    res.json({
+      id: result.rows[0].id,
+      url: `/uploads/${req.file.filename}`,
+      name: req.file.originalname,
+      size: req.file.size
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.get('/:id', (req, res) => {
-  const row = db.prepare('SELECT * FROM files WHERE id = ?').get(req.params.id);
-  if (!row) return res.status(404).json({ error: 'File not found' });
-  res.json(row);
+router.get('/:id', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM files WHERE id = $1', [req.params.id]);
+    if (!rows[0]) return res.status(404).json({ error: 'File not found' });
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.get('/', (req, res) => {
-  const rows = db.prepare('SELECT * FROM files ORDER BY created_at DESC').all();
-  res.json(rows);
+router.get('/', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM files ORDER BY created_at DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 export default router;
