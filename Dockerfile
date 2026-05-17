@@ -12,7 +12,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN apk add --no-cache python3 make g++ && npm install --omit=dev
 COPY --from=builder /app/dist ./dist
-COPY server ./server
+COPY backend/server ./server
 RUN mkdir -p uploads data
 EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
