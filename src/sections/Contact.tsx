@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Mail, Phone, MessageSquare, Clock, ExternalLink } from 'lucide-react'
+import supportImage from '../assets/marketing/support.jpg'
 
 const channels = [
   {
@@ -49,6 +50,24 @@ export default function Contact() {
             فريقنا جاهز لمساعدتك في اختيار البرنامج المناسب وإجابة استفساراتك.
           </p>
         </motion.div>
+
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mb-12 items-center">
+          <div className="glass-card p-6">
+            <p className="text-sm text-primary-600 font-semibold mb-2">دعم متجاوب ومتاح دائماً</p>
+            <h3 className="text-xl font-bold text-slate-900 mb-3">فريق خبراء يرافقك خطوة بخطوة</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              نوفر استجابة سريعة عبر الهاتف والبريد والواتساب. هدفنا تسهيل رحلتك الرقمية وضمان تشغيل الأنظمة بثقة.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <span className="chip text-xs">استجابة سريعة</span>
+              <span className="chip text-xs">خبراء محاسبة</span>
+              <span className="chip text-xs">دعم عربي كامل</span>
+            </div>
+          </div>
+          <div className="glass-card overflow-hidden">
+            <img src={supportImage} alt="فريق الدعم" className="w-full h-64 object-cover" loading="lazy" />
+          </div>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {channels.map((channel, index) => (

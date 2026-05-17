@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Cpu, ShoppingCart, Boxes, Receipt, BarChart3, FileSpreadsheet, Building2, Cloud } from 'lucide-react'
+import categoryImage from '../assets/marketing/warehouse.jpg'
 
 const categories = [
   {
@@ -101,6 +102,21 @@ export default function Categories() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-12 relative overflow-hidden rounded-3xl border border-white bg-white shadow-[0_30px_80px_-60px_rgba(15,23,42,0.4)]"
+        >
+          <img src={categoryImage} alt="إدارة المخزون" className="w-full h-60 object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+          <div className="absolute bottom-4 right-4 left-4 glass-card p-4">
+            <p className="text-sm font-semibold text-slate-900">تصنيفات مرنة حسب طبيعة نشاطك</p>
+            <p className="text-xs text-slate-500 mt-1">اختر الحل الأنسب حسب القطاع والاحتياجات التشغيلية.</p>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

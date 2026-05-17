@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion'
 import { Download, Monitor, Cloud, ArrowLeft, ShoppingCart, MapPin, Lightbulb, Mail } from 'lucide-react'
+import posImage from '../assets/marketing/hero-pos.jpg'
+import dashboardImage from '../assets/marketing/hero-dashboard.jpg'
+import warehouseImage from '../assets/marketing/warehouse.jpg'
 
 const software = [
   {
@@ -66,6 +69,24 @@ const software = [
   },
 ]
 
+const showcaseCards = [
+  {
+    title: 'نقطة بيع احترافية',
+    subtitle: 'واجهة POS عملية وسريعة.',
+    image: posImage,
+  },
+  {
+    title: 'تقارير لحظية واضحة',
+    subtitle: 'لوحات مؤشرات دقيقة لحالة نشاطك.',
+    image: dashboardImage,
+  },
+  {
+    title: 'إدارة مخزون ذكية',
+    subtitle: 'متابعة أصنافك ومستودعاتك بدقة.',
+    image: warehouseImage,
+  },
+]
+
 export default function Apps() {
   return (
     <section id="apps" className="relative py-24">
@@ -87,6 +108,26 @@ export default function Apps() {
             مجموعة متكاملة من البرامج المتخصصة لإدارة الأعمال — من المحاسبة إلى نقاط البيع وإدارة المخزون.
           </p>
         </motion.div>
+
+        <div className="grid lg:grid-cols-3 gap-6 mb-14">
+          {showcaseCards.map((card, index) => (
+            <motion.div
+              key={card.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="relative overflow-hidden rounded-3xl border border-white bg-white shadow-[0_30px_70px_-50px_rgba(15,23,42,0.35)]"
+            >
+              <img src={card.image} alt={card.title} className="h-56 w-full object-cover" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent" />
+              <div className="absolute bottom-4 right-4 left-4 glass-card p-4">
+                <p className="text-sm font-semibold text-slate-900">{card.title}</p>
+                <p className="text-xs text-slate-500 mt-1">{card.subtitle}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {software.map((app, index) => (

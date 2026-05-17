@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Target, Users, Code2, MapPin } from 'lucide-react'
 import BrandLogo from '../components/BrandLogo'
+import teamImage from '../assets/marketing/team-collab.jpg'
 
 export default function About() {
   return (
@@ -54,6 +55,19 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="grid grid-cols-2 gap-4"
           >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="col-span-2 glass-card overflow-hidden"
+            >
+              <img src={teamImage} alt="فريق العمل" className="w-full h-40 object-cover" loading="lazy" />
+              <div className="p-4">
+                <p className="text-sm font-semibold text-slate-900">فريق متكامل يقود التحول الرقمي</p>
+                <p className="text-xs text-slate-500 mt-1">تعاون بين المحاسبة والتقنية لضمان أفضل تجربة عملاء.</p>
+              </div>
+            </motion.div>
             {[
               { icon: Target, label: 'الهدف', desc: 'تبسيط إدارة الأعمال بالتقنية' },
               { icon: Users, label: 'الفريق', desc: 'مطورون ومحاسبون متخصصون' },
