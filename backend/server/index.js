@@ -23,8 +23,13 @@ app.use('/api/software', softwareRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/upload', uploadRoutes);
 
-const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
-const distDir = path.join(__dirname, '..', '..', 'dist');
+const cwd = process.cwd();
+const uploadsDir = fs.existsSync(path.join(cwd, 'uploads'))
+  ? path.join(cwd, 'uploads')
+  : path.join(__dirname, '..', '..', 'uploads');
+const distDir = fs.existsSync(path.join(cwd, 'dist'))
+  ? path.join(cwd, 'dist')
+  : path.join(__dirname, '..', '..', 'dist');
 
 // Static uploads
 app.use('/uploads', express.static(uploadsDir));
