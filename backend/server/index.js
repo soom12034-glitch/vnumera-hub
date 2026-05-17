@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -22,16 +23,21 @@ app.use('/api/software', softwareRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/upload', uploadRoutes);
 
+const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
+const distDir = path.join(__dirname, '..', '..', 'dist');
+
 // Static uploads
-app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'uploads')));
+app.use('/uploads', express.static(uploadsDir));
 
-// Static frontend (dist)
-app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
+if (fs.existsSync(distDir)) {
+  // Static frontend (dist)
+  app.use(express.static(distDir));
 
-// SPA fallback
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
-});
+  // SPA fallback
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distDir, 'index.html'));
+  });
+}
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
