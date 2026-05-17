@@ -22,14 +22,14 @@ app.use('/api/config', configRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // Static uploads
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'uploads')));
 
 // Static frontend (dist)
-app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
 // SPA fallback
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
