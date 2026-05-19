@@ -3,7 +3,7 @@ import { Download, Monitor, Cloud, ArrowLeft, ShoppingCart, MapPin, Lightbulb, M
 import posImage from '../assets/marketing/hero-pos.jpg'
 import dashboardImage from '../assets/marketing/hero-dashboard.jpg'
 import warehouseImage from '../assets/marketing/warehouse.jpg'
-import { defaultSoftware, type SoftwareItem } from '../data/siteData'
+import { defaultSoftware } from '../data/siteData'
 
 const showcaseCards = [
   {
