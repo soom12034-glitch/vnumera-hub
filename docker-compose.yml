@@ -1,17 +1,35 @@
 version: '3.8'
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vnumera-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ZGcxshNXnl4D9UsVfUEhbuCZQQmtGCM6118D8dsz8P9RxDegCnHCetpYWQsp3vzx
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - coolify
+    restart: unless-stopped
+
   vnumera:
     build: .
     container_name: vnumera-hub-v2
+    environment:
+      DATABASE_URL: postgres://postgres:ZGcxshNXnl4D9UsVfUEhbuCZQQmtGCM6118D8dsz8P9RxDegCnHCetpYWQsp3vzx@postgres:5432/postgres
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.vnumera.rule=Host(`vnumera.cashierpro-cloud.com`)"
       - "traefik.http.routers.vnumera.entrypoints=web,websecure"
       - "traefik.http.routers.vnumera.tls=true"
       - "traefik.http.routers.vnumera.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.vnumera.tls.domains[0].main=vnumera.cashierpro-cloud.com"
       - "traefik.http.services.vnumera.loadbalancer.server.port=3001"
     networks:
       - coolify
+    depends_on:
+      - postgres
     restart: unless-stopped
     volumes:
       - vnumera_data:/app/data
@@ -22,6 +40,8 @@ networks:
     external: true
 
 volumes:
+  postgres_data:
+    driver: local
   vnumera_data:
     driver: local
   vnumera_uploads:
