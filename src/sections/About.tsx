@@ -1,9 +1,29 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Target, Users, Code2, MapPin } from 'lucide-react'
 import BrandLogo from '../components/BrandLogo'
 import teamImage from '../assets/marketing/team-collab.jpg'
+import { loadConfig } from '../data/siteData'
 
 export default function About() {
+  const [company, setCompany] = useState({
+    description: 'شركة برمجيات متخصصة في تطوير حلول المحاسبة والإدارة للشركات والمحلات العربية. نقدم برامج حقيقية تعمل على الأجهزة المحلية والسحابة مع دعم كامل للوائح هيئة الزكاة والضريبة ZATCA والفواتير الإلكترونية.',
+    portfolioText: 'محفظتنا تشمل CashierPro Cloud (منصة سحابية متكاملة)، Cashier Pro (نقاط بيع للسوبرماركت)، و Surveyor Pro ERP (إدارة أجهزة المساحة والإيجارات).',
+    location: 'المملكة العربية السعودية',
+  })
+
+  useEffect(() => {
+    loadConfig().then((config) => {
+      if (config?.company) {
+        setCompany({
+          description: config.company.description || 'شركة برمجيات متخصصة في تطوير حلول المحاسبة والإدارة للشركات والمحلات العربية. نقدم برامج حقيقية تعمل على الأجهزة المحلية والسحابة مع دعم كامل للوائح هيئة الزكاة والضريبة ZATCA والفواتير الإلكترونية.',
+          portfolioText: config.company.portfolioText || 'محفظتنا تشمل CashierPro Cloud (منصة سحابية متكاملة)، Cashier Pro (نقاط بيع للسوبرماركت)، و Surveyor Pro ERP (إدارة أجهزة المساحة والإيجارات).',
+          location: config.company.location || 'المملكة العربية السعودية',
+        })
+      }
+    })
+  }, [])
+
   return (
     <section id="about" className="relative py-24">
       <div className="absolute inset-0 overflow-hidden">
@@ -36,13 +56,10 @@ export default function About() {
                   <BrandLogo size="sm" subtitle="Digital Business Studio" />
                 </div>
                 <p className="text-slate-600 leading-relaxed mb-6">
-                  شركة برمجيات متخصصة في تطوير حلول المحاسبة والإدارة للشركات والمحلات
-                  العربية. نقدم برامج حقيقية تعمل على الأجهزة المحلية والسحابة مع دعم كامل
-                  للوائح هيئة الزكاة والضريبة ZATCA والفواتير الإلكترونية.
+                  {company.description}
                 </p>
                 <p className="text-slate-600 leading-relaxed">
-                  محفظتنا تشمل CashierPro Cloud (منصة سحابية متكاملة)، Cashier Pro (نقاط بيع
-                  للسوبرماركت)، و Surveyor Pro ERP (إدارة أجهزة المساحة والإيجارات).
+                  {company.portfolioText}
                 </p>
               </div>
             </div>
@@ -72,7 +89,7 @@ export default function About() {
               { icon: Target, label: 'الهدف', desc: 'تبسيط إدارة الأعمال بالتقنية' },
               { icon: Users, label: 'الفريق', desc: 'مطورون ومحاسبون متخصصون' },
               { icon: Code2, label: 'التقنية', desc: 'تطبيقات حديثة وآمنة' },
-              { icon: MapPin, label: 'الموقع', desc: 'المملكة العربية السعودية' },
+              { icon: MapPin, label: 'الموقع', desc: company.location },
             ].map((item, index) => (
               <motion.div
                 key={item.label}

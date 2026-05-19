@@ -1,5 +1,7 @@
 import { api } from '../lib/api'
 
+const CONFIG_STORAGE_KEY = 'vnumera_site_config'
+
 export interface SoftwareItem {
   id: string
   name: string
@@ -153,15 +155,30 @@ export const defaultConfig: SiteConfig = {
 export async function loadConfig(): Promise<SiteConfig> {
   try {
     const data = await api.getConfig()
-    return { ...defaultConfig, ...data }
+    const merged = { ...defaultConfig, ...data }
+    localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(merged))
+    return merged
   } catch {
-    console.log('Using default config (API not available)')
+    try {
+      const raw = localStorage.getItem(CONFIG_STORAGE_KEY)
+      if (raw) {
+        const localData = JSON.parse(raw)
+        return { ...defaultConfig, ...localData }
+      }
+    } catch {
+      // ignore localStorage parse errors
+    }
     return defaultConfig
   }
 }
 
 export async function saveConfig(config: SiteConfig) {
-  await api.updateConfig(config)
+  localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config))
+  try {
+    await api.updateConfig(config)
+  } catch {
+    // Keep local storage as source of truth when API is unavailable
+  }
 }
 
 export function resetConfig() {

@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Monitor, Cloud, FileArchive, ExternalLink } from 'lucide-react'
+import { loadConfig } from '../data/siteData'
 
-const downloadLinks = [
+const defaultDownloadLinks = [
   {
     name: 'CashierPro Cloud',
     version: 'v2026',
@@ -35,6 +37,33 @@ const downloadLinks = [
 ]
 
 export default function Downloads() {
+  const [downloadLinks, setDownloadLinks] = useState(defaultDownloadLinks)
+
+  useEffect(() => {
+    loadConfig().then((config) => {
+      if (config?.software?.length) {
+        const mapped = config.software
+          .filter((item) => !item.isService)
+          .map((item) => ({
+            name: item.name,
+            version: item.version,
+            size: item.size,
+            type: item.type,
+            platforms: item.type.includes('Cloud')
+              ? [{ name: 'الوصول عبر المتصفح', url: item.downloadUrl || '#', icon: Cloud }]
+              : [{ name: 'Windows (64-bit)', url: item.downloadUrl || '#', icon: Monitor }],
+            cloud: item.type.includes('Cloud')
+              ? { name: item.downloadUrl || item.name, url: item.downloadUrl || '#', icon: ExternalLink }
+              : null,
+          }))
+
+        if (mapped.length > 0) {
+          setDownloadLinks(mapped)
+        }
+      }
+    })
+  }, [])
+
   return (
     <section id="downloads" className="relative py-24">
       <div className="absolute inset-0 overflow-hidden">

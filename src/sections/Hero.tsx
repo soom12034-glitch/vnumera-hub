@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Monitor, Download, Layers, ShieldCheck, BadgeCheck, Sparkles } from 'lucide-react'
 import heroPrimary from '../assets/marketing/hero-primary.jpg'
 import heroPos from '../assets/marketing/hero-pos.jpg'
 import heroDashboard from '../assets/marketing/hero-dashboard.jpg'
+import { loadConfig } from '../data/siteData'
 
 const heroImages = {
   primary: heroPrimary,
@@ -36,6 +38,28 @@ const trustBadges = [
 ]
 
 export default function Hero() {
+  const [hero, setHero] = useState({
+    badge: 'استوديو حلول رقمية للشركات الطموحة',
+    titleLine1: 'برمجيات رقمية',
+    titleLine2: 'تصنع فرقاً حقيقياً',
+    subtitle: 'منصة تسويقية راقية للبرمجيات الرقمية: نعرض منتجاتنا بأعلى جودة تصميمية ونمنح العميل صورة احترافية من أول نظرة — بدون أسعار على الصفحة.',
+    stats: highlights,
+  })
+
+  useEffect(() => {
+    loadConfig().then((config) => {
+      if (config?.hero) {
+        setHero({
+          badge: config.hero.badge || 'استوديو حلول رقمية للشركات الطموحة',
+          titleLine1: config.hero.titleLine1 || 'برمجيات رقمية',
+          titleLine2: config.hero.titleLine2 || 'تصنع فرقاً حقيقياً',
+          subtitle: config.hero.subtitle || 'منصة تسويقية راقية للبرمجيات الرقمية: نعرض منتجاتنا بأعلى جودة تصميمية ونمنح العميل صورة احترافية من أول نظرة — بدون أسعار على الصفحة.',
+          stats: config.hero.stats?.length ? config.hero.stats : highlights,
+        })
+      }
+    })
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
       <div className="absolute inset-0 overflow-hidden">
@@ -55,7 +79,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-8 shadow-sm"
             >
               <Layers className="w-4 h-4 text-primary-500" />
-              <span className="text-sm text-slate-600">استوديو حلول رقمية للشركات الطموحة</span>
+              <span className="text-sm text-slate-600">{hero.badge}</span>
             </motion.div>
 
             <motion.h1
@@ -64,8 +88,8 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="heading-xl text-slate-900 mb-6"
             >
-              <span className="text-gradient">Numera</span> — برمجيات
-              <br />رقمية تصنع فرقاً حقيقياً
+              <span className="text-gradient">Numera</span> — {hero.titleLine1}
+              <br />{hero.titleLine2}
             </motion.h1>
 
             <motion.p
@@ -74,8 +98,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="body-lg mb-10 max-w-xl"
             >
-              منصة تسويقية راقية للبرمجيات الرقمية: نعرض منتجاتنا بأعلى جودة تصميمية
-              ونمنح العميل صورة احترافية من أول نظرة — بدون أسعار على الصفحة.
+              {hero.subtitle}
             </motion.p>
 
             <motion.div
@@ -100,7 +123,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.4 }}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-xl"
             >
-              {highlights.map((item: any, index: number) => (
+              {hero.stats.map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, scale: 0.9 }}

@@ -5,9 +5,6 @@ function getToken() {
 }
 
 async function fetchJSON(url: string, options?: RequestInit) {
-  if (!API_BASE) {
-    throw new Error('API not configured');
-  }
   const res = await fetch(API_BASE + url, {
     ...options,
     headers: {

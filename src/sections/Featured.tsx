@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Monitor, Download, ArrowLeft } from 'lucide-react'
 import posImage from '../assets/marketing/hero-pos.jpg'
 import analyticsImage from '../assets/marketing/featured-analytics.jpg'
+import { loadConfig } from '../data/siteData'
 
-const featuredApps = [
+const defaultFeaturedApps = [
   {
     id: 'cashierpro-cloud',
     name: 'CashierPro Cloud',
@@ -43,6 +45,30 @@ const featuredApps = [
 ]
 
 export default function Featured() {
+  const [featuredApps, setFeaturedApps] = useState(defaultFeaturedApps)
+
+  useEffect(() => {
+    loadConfig().then((config) => {
+      if (config?.software?.length) {
+        const featured = config.software.filter((item) => item.featured)
+        if (featured.length > 0) {
+          setFeaturedApps(
+            featured.map((item) => ({
+              id: item.id,
+              name: item.name,
+              tagline: item.category,
+              description: item.description,
+              image: item.screenshots?.[0] || posImage,
+              features: item.features || [],
+              platforms: item.platforms || [],
+              type: item.type,
+              size: item.size,
+            }))
+          )
+        }
+      }
+    })
+  }, [])
 
   return (
     <section id="featured" className="relative py-24">

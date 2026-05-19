@@ -45,9 +45,13 @@ export default function ContentEditor() {
     setTimeout(() => setMessage(''), 2000)
   }
 
-  const saveChanges = () => {
-    saveConfig(config)
-    showMessage('تم الحفظ بنجاح')
+  const saveChanges = async () => {
+    try {
+      await saveConfig(config)
+      showMessage('تم الحفظ بنجاح')
+    } catch {
+      showMessage('فشل الحفظ، حاول مرة أخرى')
+    }
   }
 
   const updateCompany = (field: string, value: string) => {
