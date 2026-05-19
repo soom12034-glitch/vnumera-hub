@@ -47,8 +47,8 @@ export default function ContentEditor() {
 
   const saveChanges = async () => {
     try {
-      await saveConfig(config)
-      showMessage('تم الحفظ بنجاح')
+      const result = await saveConfig(config)
+      showMessage(result.persistedToServer ? 'تم الحفظ على السيرفر بنجاح' : 'تم حفظ محلي فقط - تحقق من اتصال السيرفر')
     } catch {
       showMessage('فشل الحفظ، حاول مرة أخرى')
     }

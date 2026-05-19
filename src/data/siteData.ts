@@ -155,7 +155,21 @@ export const defaultConfig: SiteConfig = {
 export async function loadConfig(): Promise<SiteConfig> {
   try {
     const data = await api.getConfig()
-    const merged = { ...defaultConfig, ...data }
+    const merged: SiteConfig = {
+      ...defaultConfig,
+      ...data,
+      company: { ...defaultConfig.company, ...(data?.company || {}) },
+      hero: {
+        ...defaultConfig.hero,
+        ...(data?.hero || {}),
+        stats: Array.isArray(data?.hero?.stats)
+          ? data.hero.stats
+          : defaultConfig.hero.stats,
+      },
+      software: Array.isArray(data?.software) ? data.software : defaultConfig.software,
+      contacts: Array.isArray(data?.contacts) ? data.contacts : defaultConfig.contacts,
+      socials: Array.isArray(data?.socials) ? data.socials : defaultConfig.socials,
+    }
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(merged))
     return merged
   } catch {
@@ -163,7 +177,21 @@ export async function loadConfig(): Promise<SiteConfig> {
       const raw = localStorage.getItem(CONFIG_STORAGE_KEY)
       if (raw) {
         const localData = JSON.parse(raw)
-        return { ...defaultConfig, ...localData }
+        return {
+          ...defaultConfig,
+          ...localData,
+          company: { ...defaultConfig.company, ...(localData?.company || {}) },
+          hero: {
+            ...defaultConfig.hero,
+            ...(localData?.hero || {}),
+            stats: Array.isArray(localData?.hero?.stats)
+              ? localData.hero.stats
+              : defaultConfig.hero.stats,
+          },
+          software: Array.isArray(localData?.software) ? localData.software : defaultConfig.software,
+          contacts: Array.isArray(localData?.contacts) ? localData.contacts : defaultConfig.contacts,
+          socials: Array.isArray(localData?.socials) ? localData.socials : defaultConfig.socials,
+        }
       }
     } catch {
       // ignore localStorage parse errors
@@ -172,12 +200,13 @@ export async function loadConfig(): Promise<SiteConfig> {
   }
 }
 
-export async function saveConfig(config: SiteConfig) {
+export async function saveConfig(config: SiteConfig): Promise<{ persistedToServer: boolean }> {
   localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config))
   try {
     await api.updateConfig(config)
+    return { persistedToServer: true }
   } catch {
-    // Keep local storage as source of truth when API is unavailable
+    return { persistedToServer: false }
   }
 }
 

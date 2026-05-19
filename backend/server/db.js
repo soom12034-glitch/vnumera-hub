@@ -18,9 +18,15 @@ async function init() {
         hero TEXT NOT NULL DEFAULT '{}',
         stats TEXT NOT NULL DEFAULT '[]',
         contacts TEXT NOT NULL DEFAULT '[]',
+        software TEXT NOT NULL DEFAULT '[]',
         socials TEXT NOT NULL DEFAULT '[]',
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    await client.query(`
+      ALTER TABLE config
+      ADD COLUMN IF NOT EXISTS software TEXT NOT NULL DEFAULT '[]'
     `);
 
     await client.query(`
@@ -91,12 +97,13 @@ async function init() {
       { platform: 'twitter', url: '', active: false },
       { platform: 'instagram', url: '', active: false }
     ]);
+    const defaultSoftware = JSON.stringify([]);
 
     await client.query(`
-      INSERT INTO config (id, company, hero, stats, contacts, socials)
-      VALUES (1, $1, $2, $3, $4, $5)
+      INSERT INTO config (id, company, hero, stats, contacts, socials, software)
+      VALUES (1, $1, $2, $3, $4, $5, $6)
       ON CONFLICT (id) DO NOTHING
-    `, [defaultCompany, defaultHero, defaultStats, defaultContacts, defaultSocials]);
+    `, [defaultCompany, defaultHero, defaultStats, defaultContacts, defaultSocials, defaultSoftware]);
 
     await client.query(`
       INSERT INTO admins (id, username, password)
